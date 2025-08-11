@@ -1,4 +1,21 @@
+/* ===== Root Variables ===== */
+:root {
+  --color-accent: #8ecae6;
+  --color-border: #ddd;
+  --color-border-light: #e8e8e8;
+  --color-bg: #fafafa;
+  --color-bg-hover: rgba(0, 0, 0, 0.05);
+  --color-text: #333;
+  --transition-speed: 0.3s;
+  --radius-lg: 8px;
+  --radius-md: 6px;
+}
+
 /* ===== Reset & Base Styles ===== */
+* {
+  box-sizing: border-box;
+}
+
 html, body, .map-wrap {
   height: 100%;
   margin: 0; 
@@ -9,110 +26,130 @@ html, body, .map-wrap {
 body {
   display: flex;
   height: 100vh;
+  line-height: 1.5;
 }
 
 /* ===== Sidebar Styles ===== */
 .sidebar {
   width: 400px;
   padding: 20px;
-  box-sizing: border-box;
-  border-right: 1px solid #e8e8e8;
-  background: #fafafa;
+  border-right: 1px solid var(--color-border-light);
+  background: var(--color-bg);
   overflow-y: auto;
 }
 
 .sidebar-title {
   text-align: center;
-  width: 100%;
-  margin: 0;
-  padding: 0 0 16px 0; /* optional bottom padding for spacing */
+  margin: 0 0 16px 0;
   font-weight: bold;
   font-size: 1.8rem;
 }
 
-/* Sidebar navigation buttons container */
 .sidebar-nav {
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
 }
 
-/* Stack title and buttons vertically */
 .sidebar-nav.top-bar {
-  display: flex;
   flex-direction: column;
-  align-items: flex-start; /* left align */
-  gap: 8px; /* spacing between title and buttons */
+  align-items: flex-start;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
-/* Buttons stacked vertically */
 .nav-buttons {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 100%; /* optional: full width buttons */
+  width: 100%;
 }
 
-/* Sidebar navigation buttons */
-.nav-btn {
-  background: none;
-  border: none;
-  color: black;
+/* ===== Button & Input Styles ===== */
+button, select, input[type=text] {
+  padding: 8px 10px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: white;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+  transition: background var(--transition-speed) ease, border var(--transition-speed) ease;
+}
+
+button:hover, select:hover {
+  background: var(--color-bg-hover);
+}
+
+button:focus, select:focus, input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
 }
 
-/* Hover state for nav buttons */
 .nav-btn:hover {
-  background: rgba(0,0,0,0.05);
+  background: var(--color-bg-hover);
 }
 
-/* ===== Map Wrapper Styles ===== */
+.nav-btn.active {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* ===== Map Wrapper ===== */
 .map-wrap {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   background: #e5e5e5;
 }
 
-/* Make SVG fill the container */
 svg {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-/* ===== Search Box Styles ===== */
+/* ===== Search Box & Suggestions ===== */
 .search {
   display: flex;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-/* Text input in search */
-input[type=text] {
-  flex: 1;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+#suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--color-border);
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
+  display: none;
 }
 
-/* Select dropdown and buttons */
-select, button {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: white;
+#suggestions li {
+  padding: 8px;
   cursor: pointer;
 }
 
-/* ===== Progress Circle Styles ===== */
+#suggestions li:hover {
+  background: var(--color-bg-hover);
+}
+
+/* ===== Progress Circle ===== */
 .progress-circle {
   width: 120px;
   height: 120px;
@@ -120,44 +157,39 @@ select, button {
   position: relative;
 }
 
-/* Rotate SVG to start circle from top */
 .progress-circle svg {
   transform: rotate(-90deg);
 }
 
-/* Background circle */
 .progress-bg {
   fill: none;
   stroke: #eee;
   stroke-width: 12;
 }
 
-/* Foreground progress bar */
 .progress-bar {
   fill: none;
-  stroke: #8ecae6;
+  stroke: var(--color-accent);
   stroke-width: 12;
   stroke-linecap: round;
-  stroke-dasharray: 339.292; /* 2 * π * r (r=54) */
-  stroke-dashoffset: 339.292; /* initially hidden */
+  stroke-dasharray: 339.292;
+  stroke-dashoffset: 339.292;
   transition: stroke-dashoffset 0.6s ease;
 }
 
-/* Center text inside the progress circle */
 #progressText {
   transform: rotate(90deg);
   dominant-baseline: middle;
   font-weight: bold;
-  fill: #333;
+  fill: var(--color-text);
   user-select: none;
 }
 
-/* ===== Legend Styles ===== */
+/* ===== Legend ===== */
 .legend {
   margin-top: 16px;
 }
 
-/* Each legend item */
 .legend .item {
   display: flex;
   gap: 8px;
@@ -165,38 +197,35 @@ select, button {
   margin-bottom: 8px;
 }
 
-/* Color swatches in legend */
 .swatch {
   width: 22px;
   height: 14px;
   border: 1px solid #ccc;
 }
 
-/* ===== Tooltip Styles ===== */
+/* ===== Tooltip ===== */
 .tooltip {
   position: absolute;
   pointer-events: none;
   padding: 6px 8px;
   background: rgba(0,0,0,0.75);
   color: white;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 13px;
   display: none;
   z-index: 10;
   max-width: 220px;
 }
 
-/* Flag icon inside tooltip */
 .tooltip img.flag-icon {
   vertical-align: middle;
   width: 24px;
-  height: auto;
   margin-right: 6px;
   border: 1px solid #ccc;
   border-radius: 2px;
 }
 
-/* ===== Controls Styles ===== */
+/* ===== Controls ===== */
 .controls {
   margin-top: 20px;
   display: flex;
@@ -204,38 +233,37 @@ select, button {
   flex-wrap: wrap;
 }
 
-/* Notes under controls */
 .note {
   margin-top: 12px;
   font-size: 13px;
   color: #555;
 }
 
-/* Country name text */
 .country-name {
   font-weight: 600;
 }
 
-/* ===== Footer Styles ===== */
+/* ===== Footer ===== */
 .footer {
   position: absolute;
   right: 12px;
   bottom: 12px;
   background: rgba(255,255,255,0.9);
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   font-size: 13px;
   user-select: none;
 }
 
-/* Active nav button style */
-.nav-btn.active {
-  background-color: #8ecae6;
-  color: white;
+/* ===== Content Transition ===== */
+#homeContent, #statsContent {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
 }
 
-/* Optional: smooth fade for content switch (if you want) */
-#homeContent, #statsContent {
-  transition: opacity 0.3s ease;
+#homeContent.active, #statsContent.active {
+  opacity: 1;
+  visibility: visible;
 }

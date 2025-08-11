@@ -1,24 +1,37 @@
-function updateStats(states) {
-  // Only update if stats content is visible
-  const statsContent = document.getElementById('statsContent');
-  if (!statsContent || statsContent.style.display === 'none') {
-    return; // don't update if stats section is hidden
+window.updateStats = function() {
+  // Assuming window.states holds the country status info
+  const states = window.states || {};
+  const totalCountries = Object.keys(states).length || 0;
+
+  let beenCount = 0;
+  let wantCount = 0;
+
+  for (const key in states) {
+    if (states[key] === 'been') beenCount++;
+    else if (states[key] === 'want') wantCount++;
   }
 
-  const visitedCount = Object.values(states).filter(v => v === 'been').length;
-  const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
+  const totalKnown = beenCount + wantCount;
+  const percentBeen = totalCountries > 0 ? Math.round((beenCount / totalCountries) * 100) : 0;
 
-  document.getElementById('statsSummary').innerHTML =
-    `<strong>Visited Countries: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)</strong>`;
+  // Update progress circle
+  const progressBar = document.querySelector('.progress-bar');
+  const progressText = document.getElementById('progressText');
+  const statsSummary = document.getElementById('statsSummary');
 
-  // Calculate stroke-dashoffset for progress circle
-  const circle = document.querySelector('.progress-bar');
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (circumference * percentBeen) / 100;
 
-  const offset = circumference - (percent / 100) * circumference;
-  circle.style.strokeDashoffset = offset;
+  if (progressBar) {
+    progressBar.style.strokeDashoffset = offset;
+  }
 
-  // Update text inside the circle
-  document.getElementById('progressText').textContent = `${percent}%`;
-}
+  if (progressText) {
+    progressText.textContent = `${percentBeen}%`;
+  }
+
+  if (statsSummary) {
+    statsSummary.textContent = `You have visited ${beenCount} countries out of ${totalCountries} marked. Want to go: ${wantCount} countries.`;
+  }
+};
