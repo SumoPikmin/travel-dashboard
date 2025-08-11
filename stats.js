@@ -4,7 +4,7 @@ function updateStats(states) {
   const visitedCount = Object.values(states).filter(v => v === 'been').length;
   const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
   document.getElementById('statsSummary').textContent =
-    `Visited: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)`;
+    `Visited Countries: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)`;
 }
 
 function setupStatsNavigation() {
