@@ -81,15 +81,8 @@
     // We'll try to read world map topojson object inserted by the world-atlas script above
     // In case it's not available via the global, fetch fallback
     (async function(){
-      const topo = (typeof world === 'undefined') ? null : world;
-      let worldData;
-      if (topo && topo.objects) {
-        worldData = topo;
-      } else {
-        // fallback fetch
-        const resp = await fetch('https://unpkg.com/world-atlas@2.0.2/world/110m.json');
-        worldData = await resp.json();
-      }
+      const resp = await fetch('https://unpkg.com/world-atlas@2.0.2/world/110m.json');
+      const worldData = await resp.json();
 
       const countries = topojson.feature(worldData, worldData.objects.countries).features;
 
