@@ -29,7 +29,7 @@ body {
   line-height: 1.5;
 }
 
-/* ===== Sidebar Styles ===== */
+/* ===== Sidebar ===== */
 .sidebar {
   width: 400px;
   padding: 20px;
@@ -40,24 +40,23 @@ body {
 
 .sidebar-title {
   text-align: center;
-  margin: 0 0 16px 0;
+  margin: 0 0 16px;
   font-weight: bold;
   font-size: 1.8rem;
 }
 
 .sidebar-nav {
+  margin-bottom: 20px;
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
 }
 
 .sidebar-nav.top-bar {
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 20px;
 }
 
+/* Navigation buttons container */
 .nav-buttons {
   display: flex;
   flex-direction: column;
@@ -65,7 +64,7 @@ body {
   width: 100%;
 }
 
-/* ===== Button & Input Styles ===== */
+/* ===== Buttons & Inputs ===== */
 button, select, input[type=text] {
   padding: 8px 10px;
   border-radius: var(--radius-lg);
@@ -86,6 +85,7 @@ button:focus, select:focus, input:focus {
   outline-offset: 2px;
 }
 
+/* Nav button overrides */
 .nav-btn {
   background: none;
   border: none;
@@ -102,7 +102,7 @@ button:focus, select:focus, input:focus {
   color: white;
 }
 
-/* ===== Map Wrapper ===== */
+/* ===== Map Wrapper & SVG ===== */
 .map-wrap {
   flex: 1;
   display: flex;
@@ -117,7 +117,7 @@ svg {
   display: block;
 }
 
-/* ===== Search Box & Suggestions ===== */
+/* ===== Search & Suggestions ===== */
 .search {
   position: relative;
   display: flex;
@@ -128,15 +128,13 @@ svg {
 #suggestions {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   background: white;
   border: 1px solid var(--color-border);
   max-height: 150px;
   overflow-y: auto;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   z-index: 1000;
   display: none;
 }
@@ -162,16 +160,17 @@ svg {
   transform: rotate(-90deg);
 }
 
-.progress-bg {
+.progress-bg, .progress-bar {
   fill: none;
-  stroke: #eee;
   stroke-width: 12;
 }
 
+.progress-bg {
+  stroke: #eee;
+}
+
 .progress-bar {
-  fill: none;
   stroke: var(--color-accent);
-  stroke-width: 12;
   stroke-linecap: round;
   stroke-dasharray: 339.292;
   stroke-dashoffset: 339.292;
@@ -193,8 +192,8 @@ svg {
 
 .legend .item {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
   margin-bottom: 8px;
 }
 
@@ -230,8 +229,8 @@ svg {
 .controls {
   margin-top: 20px;
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
 .note {

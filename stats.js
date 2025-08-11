@@ -3,7 +3,6 @@ const TOTAL_COUNTRIES = 195;
 function updateStats(states) {
   const statsContent = document.getElementById('statsContent');
   if (!statsContent || statsContent.style.display === 'none') {
-    (!confirm('Do you want to remove all marks?'))
     return; // Skip if stats section is hidden
   }
 
