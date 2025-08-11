@@ -8,87 +8,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<script>
-  const countries = [
-  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-  "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-  "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
-  "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Democratic Republic of Congo",
-  "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
-  "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland",
-  "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
-  "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
-  "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North",
-  "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
-  "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
-  "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique",
-  "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia",
-  "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines",
-  "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa",
-  "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
-  "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland",
-  "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia",
-  "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan",
-  "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-];
-
-
-  const searchInput = document.getElementById("searchInput");
-  const suggestions = document.getElementById("suggestions");
-
- searchInput.addEventListener("input", () => {
-  const input = searchInput.value.toLowerCase().trim();
-  suggestions.innerHTML = "";
-
-  if (!input) {
-    suggestions.style.display = "none";
-    return;
-  }
-
-  const filtered = countries.filter(country => {
-    const words = country.toLowerCase().split(/\s+/);
-    return words.some(word => word.startsWith(input));
-  });
-
-  if (filtered.length === 0) {
-    suggestions.style.display = "none";
-    return;
-  }
-
-  filtered.forEach(country => {
-    const li = document.createElement("li");
-    li.textContent = country;
-    li.style.padding = "8px";
-    li.style.cursor = "pointer";
-
-    li.addEventListener("click", () => {
-      searchInput.value = country;
-      suggestions.style.display = "none";
-    });
-
-    li.addEventListener("mouseover", () => {
-      li.style.backgroundColor = "#eee";
-    });
-
-    li.addEventListener("mouseout", () => {
-      li.style.backgroundColor = "white";
-    });
-
-    suggestions.appendChild(li);
-  });
-
-  suggestions.style.display = "block";
-});
-
-
-  // Hide suggestions when clicking outside the search box
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".search")) {
-      suggestions.style.display = "none";
-    }
-  });
-</script>
-
 <body>
   <div class="sidebar">
     <div class="sidebar-nav top-bar">
@@ -106,32 +25,31 @@
         <h2>Travel Map</h2>
         <p>Mark countries as <strong>neutral</strong>, <strong>been</strong> or <strong>want to go</strong>. Click countries on the map to cycle the status or use the search box below.</p>
 
-       <div class="search" style="position: relative;">
-  <input id="searchInput" type="text" placeholder="Search country (e.g. Spain)" autocomplete="off" />
-  <select id="statusSelect">
-    <option value="neutral">Neutral</option>
-    <option value="been">Been</option>
-    <option value="want">Want to go</option>
-  </select>
-  <button id="applyBtn">Enter</button>
+        <div class="search" style="position: relative;">
+          <input id="searchInput" type="text" placeholder="Search country (e.g. Spain)" autocomplete="off" />
+          <select id="statusSelect">
+            <option value="neutral">Neutral</option>
+            <option value="been">Been</option>
+            <option value="want">Want to go</option>
+          </select>
+          <button id="applyBtn">Enter</button>
 
-  <ul id="suggestions" style="
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    max-height: 150px;
-    overflow-y: auto;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    z-index: 1000;
-    display: none;
-  "></ul>
-</div>
-
+          <ul id="suggestions" style="
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            z-index: 1000;
+            display: none;
+          "></ul>
+        </div>
 
         <div class="legend">
           <div class="item"><div class="swatch" style="background: #ffffff"></div> Neutral</div>
@@ -159,13 +77,11 @@
             <span style="color: black;">Neutral</span>)</li>
         </ul>
       </div>
-
-      
     </div>
 
     <!-- Stats content -->
-     <h2>Statistics</h2>
     <div id="statsContent" style="display:none; padding: 0 10px;">
+      <h2>Statistics</h2>
       <div class="progress-circle">
         <svg width="120" height="120" viewBox="0 0 120 120">
           <circle class="progress-bg" cx="60" cy="60" r="54" />
@@ -174,9 +90,7 @@
         </svg>
       </div>
       <p id="statsSummary">Loading stats...</p>
-      
       <p>This section will display your travel statistics and charts.</p>
-      <!-- You can put stats.js generated content here or customize further -->
     </div>
   </div>
 
@@ -192,32 +106,111 @@
   <script src="map.js"></script>
 
   <script>
-    // Toggle between Home and Stats content
-    const homeBtn = document.getElementById('homeBtn');
-    const statsBtn = document.getElementById('statsBtn');
-    const homeContent = document.getElementById('homeContent');
-    const statsContent = document.getElementById('statsContent');
+    document.addEventListener('DOMContentLoaded', () => {
+      const countries = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+        "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+        "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+        "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Democratic Republic of Congo",
+        "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+        "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland",
+        "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
+        "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
+        "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North",
+        "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
+        "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
+        "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique",
+        "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia",
+        "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines",
+        "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa",
+        "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
+        "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland",
+        "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia",
+        "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan",
+        "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+      ];
 
-    function setActive(button) {
-      homeBtn.classList.remove('active');
-      statsBtn.classList.remove('active');
-      button.classList.add('active');
-    }
+      const searchInput = document.getElementById("searchInput");
+      const suggestions = document.getElementById("suggestions");
 
-    homeBtn.addEventListener('click', () => {
-      homeContent.style.display = 'block';
-      statsContent.style.display = 'none';
+      searchInput.addEventListener("input", () => {
+        const input = searchInput.value.toLowerCase().trim();
+        suggestions.innerHTML = "";
+
+        if (!input) {
+          suggestions.style.display = "none";
+          return;
+        }
+
+        const filtered = countries.filter(country => {
+          const words = country.toLowerCase().split(/\s+/);
+          return words.some(word => word.startsWith(input));
+        });
+
+        if (filtered.length === 0) {
+          suggestions.style.display = "none";
+          return;
+        }
+
+        filtered.forEach(country => {
+          const li = document.createElement("li");
+          li.textContent = country;
+          li.style.padding = "8px";
+          li.style.cursor = "pointer";
+
+          li.addEventListener("click", () => {
+            searchInput.value = country;
+            suggestions.style.display = "none";
+          });
+
+          li.addEventListener("mouseover", () => {
+            li.style.backgroundColor = "#eee";
+          });
+
+          li.addEventListener("mouseout", () => {
+            li.style.backgroundColor = "white";
+          });
+
+          suggestions.appendChild(li);
+        });
+
+        suggestions.style.display = "block";
+      });
+
+      // Hide suggestions when clicking outside the search box
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".search")) {
+          suggestions.style.display = "none";
+        }
+      });
+
+      // Toggle between Home and Stats content
+      const homeBtn = document.getElementById('homeBtn');
+      const statsBtn = document.getElementById('statsBtn');
+      const homeContent = document.getElementById('homeContent');
+      const statsContent = document.getElementById('statsContent');
+
+      function setActive(button) {
+        homeBtn.classList.remove('active');
+        statsBtn.classList.remove('active');
+        button.classList.add('active');
+      }
+
+      homeBtn.addEventListener('click', () => {
+        homeContent.style.display = 'block';
+        statsContent.style.display = 'none';
+        setActive(homeBtn);
+      });
+
+      statsBtn.addEventListener('click', () => {
+        homeContent.style.display = 'none';
+        statsContent.style.display = 'block';
+        setActive(statsBtn);
+      });
+
+      // Initialize with Home active
       setActive(homeBtn);
     });
-
-    statsBtn.addEventListener('click', () => {
-      homeContent.style.display = 'none';
-      statsContent.style.display = 'block';
-      setActive(statsBtn);
-    });
-
-    // Initialize with Home active
-    setActive(homeBtn);
   </script>
 </body>
 </html>
