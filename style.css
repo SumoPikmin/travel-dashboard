@@ -21,6 +21,15 @@ body {
   overflow-y: auto;
 }
 
+.sidebar-title {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 16px 0; /* optional bottom padding for spacing */
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
 /* Sidebar navigation buttons container */
 .sidebar-nav {
   display: flex;
@@ -218,4 +227,15 @@ select, button {
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   font-size: 13px;
   user-select: none;
+}
+
+/* Active nav button style */
+.nav-btn.active {
+  background-color: #8ecae6;
+  color: white;
+}
+
+/* Optional: smooth fade for content switch (if you want) */
+#homeContent, #statsContent {
+  transition: opacity 0.3s ease;
 }

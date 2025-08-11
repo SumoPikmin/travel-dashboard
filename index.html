@@ -4,98 +4,78 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Travel Dashboard</title>
-  <link rel="icon" type="image/png" href="data/favicon.png">
+  <link rel="icon" type="image/png" href="data/favicon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="sidebar">
-  <div class="sidebar-nav top-bar">
-    <h1 class="sidebar-title">Travel Dashboard</h1>
-    <div class="nav-buttons">
-      <button id="homeBtn" class="nav-btn">Home</button>
-      <button id="statsBtn" class="nav-btn">Stats</button>
+    <div class="sidebar-nav top-bar">
+      <h1 class="sidebar-title">Travel Dashboard</h1>
+      <div class="nav-buttons">
+        <button id="homeBtn" class="nav-btn">Home</button>
+        <button id="statsBtn" class="nav-btn">Stats</button>
+      </div>
     </div>
-  </div>
 
-    <script>
-    const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
-
-    // Full list of countries and ISO codes (alpha-2) for flags
-    const nameToCode = {
-      "Afghanistan":"af","Albania":"al","Algeria":"dz","Andorra":"ad","Angola":"ao","Antigua and Barbuda":"ag","Argentina":"ar","Armenia":"am","Australia":"au","Austria":"at",
-      "Azerbaijan":"az","Bahamas":"bs","Bahrain":"bh","Bangladesh":"bd","Barbados":"bb","Belarus":"by","Belgium":"be","Belize":"bz","Benin":"bj","Bhutan":"bt",
-      "Bolivia":"bo","Bosnia and Herzegovina":"ba","Botswana":"bw","Brazil":"br","Brunei":"bn","Bulgaria":"bg","Burkina Faso":"bf","Burundi":"bi","Cabo Verde":"cv","Cambodia":"kh",
-      "Cameroon":"cm","Canada":"ca","Central African Republic":"cf","Chad":"td","Chile":"cl","China":"cn","Colombia":"co","Comoros":"km","Congo (Brazzaville)":"cg","Congo (Kinshasa)":"cd",
-      "Costa Rica":"cr","Cote d'Ivoire":"ci","Croatia":"hr","Cuba":"cu","Cyprus":"cy","Czech Republic":"cz","Denmark":"dk","Djibouti":"dj","Dominica":"dm","Dominican Republic":"do",
-      "Ecuador":"ec","Egypt":"eg","El Salvador":"sv","Equatorial Guinea":"gq","Eritrea":"er","Estonia":"ee","Eswatini":"sz","Ethiopia":"et","Fiji":"fj","Finland":"fi",
-      "France":"fr","Gabon":"ga","Gambia":"gm","Georgia":"ge","Germany":"de","Ghana":"gh","Greece":"gr","Grenada":"gd","Guatemala":"gt","Guinea":"gn",
-      "Guinea-Bissau":"gw","Guyana":"gy","Haiti":"ht","Honduras":"hn","Hungary":"hu","Iceland":"is","India":"in","Indonesia":"id","Iran":"ir","Iraq":"iq",
-      "Ireland":"ie","Israel":"il","Italy":"it","Jamaica":"jm","Japan":"jp","Jordan":"jo","Kazakhstan":"kz","Kenya":"ke","Kiribati":"ki","Korea, North":"kp",
-      "Korea, South":"kr","Kosovo":"xk","Kuwait":"kw","Kyrgyzstan":"kg","Laos":"la","Latvia":"lv","Lebanon":"lb","Lesotho":"ls","Liberia":"lr","Libya":"ly",
-      "Liechtenstein":"li","Lithuania":"lt","Luxembourg":"lu","Madagascar":"mg","Malawi":"mw","Malaysia":"my","Maldives":"mv","Mali":"ml","Malta":"mt","Marshall Islands":"mh",
-      "Mauritania":"mr","Mauritius":"mu","Mexico":"mx","Micronesia":"fm","Moldova":"md","Monaco":"mc","Mongolia":"mn","Montenegro":"me","Morocco":"ma","Mozambique":"mz",
-      "Myanmar":"mm","Namibia":"na","Nauru":"nr","Nepal":"np","Netherlands":"nl","New Zealand":"nz","Nicaragua":"ni","Niger":"ne","Nigeria":"ng","North Macedonia":"mk",
-      "Norway":"no","Oman":"om","Pakistan":"pk","Palau":"pw","Palestine":"ps","Panama":"pa","Papua New Guinea":"pg","Paraguay":"py","Peru":"pe","Philippines":"ph",
-      "Poland":"pl","Portugal":"pt","Qatar":"qa","Romania":"ro","Russia":"ru","Rwanda":"rw","Saint Kitts and Nevis":"kn","Saint Lucia":"lc","Saint Vincent and the Grenadines":"vc","Samoa":"ws",
-      "San Marino":"sm","Sao Tome and Principe":"st","Saudi Arabia":"sa","Senegal":"sn","Serbia":"rs","Seychelles":"sc","Sierra Leone":"sl","Singapore":"sg","Slovakia":"sk","Slovenia":"si",
-      "Solomon Islands":"sb","Somalia":"so","South Africa":"za","South Sudan":"ss","Spain":"es","Sri Lanka":"lk","Sudan":"sd","Suriname":"sr","Sweden":"se","Switzerland":"ch",
-      "Syria":"sy","Taiwan":"tw","Tajikistan":"tj","Tanzania":"tz","Thailand":"th","Timor-Leste":"tl","Togo":"tg","Tonga":"to","Trinidad and Tobago":"tt","Tunisia":"tn",
-      "Turkey":"tr","Turkmenistan":"tm","Tuvalu":"tv","Uganda":"ug","Ukraine":"ua","United Arab Emirates":"ae","United Kingdom":"gb","United States":"us","Uruguay":"uy","Uzbekistan":"uz",
-      "Vanuatu":"vu","Vatican City":"va","Venezuela":"ve","Vietnam":"vn","Yemen":"ye","Zambia":"zm","Zimbabwe":"zw"
-    };
-
-
-    </script>
-    <hr />
-    <div id="mapView">
-      <h2>Travel Map</h2>
-      <p>Mark countries as <strong>neutral</strong>, <strong>been</strong> or <strong>want to go</strong>. Click countries on the map to cycle the status or use the search box below.</p>
-
-      <div class="search">
-        <input id="searchInput" type="text" placeholder="Search country (e.g. Spain)" />
-        <select id="statusSelect">
-          <option value="neutral">Neutral</option>
-          <option value="been">Been</option>
-          <option value="want">Want to go</option>
-        </select>
-        <button id="applyBtn">Enter</button>
-      </div>
-
-      <div class="legend">
-        <div class="item"><div class="swatch" style="background: #ffffff"></div> Neutral</div>
-        <div class="item"><div class="swatch" style="background: #8ecae6"></div> Been</div>
-        <div class="item"><div class="swatch" style="background: #ffd166"></div> Want to go</div>
-      </div>
-
-      <div class="note">Progress is not saved automatically — click the button below to save and load the progress.</div>
-
-      <div class="controls">
-        <button id="resetBtn">Reset</button>
-        <button id="importBtn">Load Progress</button>
-        <button id="exportBtn">Save Progress</button>
-        <input id="fileInput" type="file" accept="application/json" style="display:none" />
-      </div>
-
+    <!-- Home content -->
+    <div id="homeContent">
       <hr />
-      <strong>Quick actions</strong>
-      <ul>
-        <li>Hover over countries to see their name.</li>
-        <li>Click on countries to change their status. (
-        <span style="color: black;">Neutral</span> &rarr; 
-        <span style="color: #8ecae6;">Been</span> &rarr; 
-        <span style="color: #ffd166;">Want</span> &rarr; 
-        <span style="color: black;">Neutral</span>)</li>
-      </ul>
+      <div id="mapView">
+        <h2>Travel Map</h2>
+        <p>Mark countries as <strong>neutral</strong>, <strong>been</strong> or <strong>want to go</strong>. Click countries on the map to cycle the status or use the search box below.</p>
+
+        <div class="search">
+          <input id="searchInput" type="text" placeholder="Search country (e.g. Spain)" />
+          <select id="statusSelect">
+            <option value="neutral">Neutral</option>
+            <option value="been">Been</option>
+            <option value="want">Want to go</option>
+          </select>
+          <button id="applyBtn">Enter</button>
+        </div>
+
+        <div class="legend">
+          <div class="item"><div class="swatch" style="background: #ffffff"></div> Neutral</div>
+          <div class="item"><div class="swatch" style="background: #8ecae6"></div> Been</div>
+          <div class="item"><div class="swatch" style="background: #ffd166"></div> Want to go</div>
+        </div>
+
+        <div class="note">Progress is not saved automatically — click the button below to save and load the progress.</div>
+
+        <div class="controls">
+          <button id="resetBtn">Reset</button>
+          <button id="importBtn">Load Progress</button>
+          <button id="exportBtn">Save Progress</button>
+          <input id="fileInput" type="file" accept="application/json" style="display:none" />
+        </div>
+
+        <hr />
+        <strong>Quick actions</strong>
+        <ul>
+          <li>Hover over countries to see their name.</li>
+          <li>Click on countries to change their status. (
+            <span style="color: black;">Neutral</span> &rarr; 
+            <span style="color: #8ecae6;">Been</span> &rarr; 
+            <span style="color: #ffd166;">Want</span> &rarr; 
+            <span style="color: black;">Neutral</span>)</li>
+        </ul>
+      </div>
+
+      <div class="progress-circle">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="progress-bg" cx="60" cy="60" r="54" />
+          <circle class="progress-bar" cx="60" cy="60" r="54" />
+          <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
+        </svg>
+      </div>
+      <p id="statsSummary">Loading stats...</p>
     </div>
 
-    <div class="progress-circle">
-    <svg width="120" height="120" viewBox="0 0 120 120">
-      <circle class="progress-bg" cx="60" cy="60" r="54" />
-      <circle class="progress-bar" cx="60" cy="60" r="54" />
-      <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
-    </svg>
-  </div>
-       <p id="statsSummary">Loading stats...</p>
+    <!-- Stats content -->
+    <div id="statsContent" style="display:none; padding: 0 10px;">
+      <h2>Statistics</h2>
+      <p>This section will display your travel statistics and charts.</p>
+      <!-- You can put stats.js generated content here or customize further -->
     </div>
   </div>
 
@@ -109,5 +89,34 @@
   <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
   <script src="stats.js"></script>
   <script src="map.js"></script>
+
+  <script>
+    // Toggle between Home and Stats content
+    const homeBtn = document.getElementById('homeBtn');
+    const statsBtn = document.getElementById('statsBtn');
+    const homeContent = document.getElementById('homeContent');
+    const statsContent = document.getElementById('statsContent');
+
+    function setActive(button) {
+      homeBtn.classList.remove('active');
+      statsBtn.classList.remove('active');
+      button.classList.add('active');
+    }
+
+    homeBtn.addEventListener('click', () => {
+      homeContent.style.display = 'block';
+      statsContent.style.display = 'none';
+      setActive(homeBtn);
+    });
+
+    statsBtn.addEventListener('click', () => {
+      homeContent.style.display = 'none';
+      statsContent.style.display = 'block';
+      setActive(statsBtn);
+    });
+
+    // Initialize with Home active
+    setActive(homeBtn);
+  </script>
 </body>
 </html>
