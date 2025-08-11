@@ -100,15 +100,16 @@
     <div class="footer">Tip: use zoom (mouse wheel) and drag to pan</div>
   </div>
 
-  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
-  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-  <script src="stats.js"></script>
-  <script src="map.js"></script>
-
-  <script>
+    <script>
   // Ensure states is global
     window.states = {};
   </script>
+
+  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script src="map.js"></script>
+  <script src="stats.js"></script>
+
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -211,10 +212,7 @@
         homeContent.style.display = 'none';
         statsContent.style.display = 'block';
         setActive(statsBtn);
-        if (typeof states == 'undefined') {
-          states = {}
-        }
-        updateStats(states);
+        updateStats(window.states);
       });
 
       // Initialize with Home active
