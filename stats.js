@@ -1,6 +1,10 @@
-const TOTAL_COUNTRIES = 195;
-
 function updateStats(states) {
+  // Only update if stats content is visible
+  const statsContent = document.getElementById('statsContent');
+  if (!statsContent || statsContent.style.display === 'none') {
+    return; // don't update if stats section is hidden
+  }
+
   const visitedCount = Object.values(states).filter(v => v === 'been').length;
   const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
 
