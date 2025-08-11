@@ -91,15 +91,21 @@
     </div>
 
     <!-- Stats content -->
-    <div id="statsContent" style="display:none; padding: 0 10px;">
-      <h2>Statistics</h2>
-      <div class="progress-circle">
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          <circle class="progress-bg" cx="60" cy="60" r="54" />
-          <circle class="progress-bar" cx="60" cy="60" r="54" stroke="#8ecae6" stroke-width="12" fill="none" stroke-dasharray="339.292" stroke-dashoffset="339.292" />
-          <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
+    <div id="statsContent">
+      <div id="statsSummary"></div>
+        <svg width="120" height="120">
+          <circle
+            class="progress-bar"
+            stroke="#4caf50"
+            stroke-width="10"
+            fill="none"
+            r="54"
+            cx="60"
+            cy="60"
+            style="stroke-dasharray: 339.292; stroke-dashoffset: 339.292;"
+          ></circle>
         </svg>
-      </div>
+        <div id="progressText">0%</div>
       <p id="statsSummary">Loading stats...</p>
       <p>This section will display your travel statistics and charts.</p>
     </div>
