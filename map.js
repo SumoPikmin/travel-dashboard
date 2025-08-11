@@ -1,18 +1,3 @@
-document.getElementById('homeBtn').addEventListener('click', () => {
-  document.getElementById('mapView').style.display = '';
-  document.getElementById('statsView').style.display = 'none';
-  document.querySelector('.map-wrap').style.display = '';
-});
-document.getElementById('statsBtn').addEventListener('click', () => {
-  document.getElementById('mapView').style.display = 'none';
-  document.getElementById('statsView').style.display = '';
-  document.querySelector('.map-wrap').style.display = 'none';
-  updateStats();
-});
-
-const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
-const TOTAL_COUNTRIES = 192;
-
 (async function(){
   const resp = await fetch('data/countries-110m.json');
   if (!resp.ok) {
@@ -22,13 +7,7 @@ const TOTAL_COUNTRIES = 192;
   const worldData = await resp.json();
   const countries = topojson.feature(worldData, worldData.objects.countries).features;
 
-  const idToName = {
-    4: 'Afghanistan', 8: 'Albania', 12: 'Algeria', 20: 'Andorra', 24: 'Angola',
-    276: 'Germany', 840: 'United States', 250: 'France', 356: 'India', 724: 'Spain',
-    554: 'New Zealand', 36: 'Australia', 124: 'Canada', 528: 'Netherlands',
-    196: 'Poland', 643: 'Russia', 156: 'China', 392: 'Japan', 752: 'Sweden'
-  };
-
+  const idToName = { /* country mappings */ };
   const nameIndex = {};
   countries.forEach(f => {
     const id = f.id;
@@ -59,6 +38,8 @@ const TOTAL_COUNTRIES = 192;
     .on('zoom', ({transform}) => g.attr('transform', transform));
   svg.call(zoom);
 
+  const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
+
   const countryPaths = g.selectAll('path.country')
     .data(countries)
     .join('path')
@@ -75,7 +56,7 @@ const TOTAL_COUNTRIES = 192;
       cycleState(d);
       updateVisual(d);
       saveStates();
-      updateStats();
+      updateStats(states);
     });
 
   const tooltip = d3.select('#tooltip');
@@ -108,18 +89,9 @@ const TOTAL_COUNTRIES = 192;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
   }
 
-  function updateStats(){
-    const visitedCount = Object.values(states).filter(v => v === 'been').length;
-    const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
-    document.getElementById('statsSummary').textContent =
-      `Visited: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)`;
-  }
-
-  const input = document.getElementById('searchInput');
-  const select = document.getElementById('statusSelect');
-  const applyBtn = document.getElementById('applyBtn');
-  applyBtn.addEventListener('click', () => {
-    const q = input.value.trim().toLowerCase();
+  document.getElementById('applyBtn').addEventListener('click', () => {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    const select = document.getElementById('statusSelect');
     if (!q) return alert('Please enter a country name.');
     const match = Object.keys(nameIndex).find(k => k.includes(q));
     if (!match) return alert('Country not found.');
@@ -128,11 +100,8 @@ const TOTAL_COUNTRIES = 192;
     if (chosen === 'neutral') delete states[f.id]; else states[f.id] = chosen;
     updateVisual(f);
     saveStates();
-    updateStats();
-    input.value = '';
-  });
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') applyBtn.click();
+    updateStats(states);
+    document.getElementById('searchInput').value = '';
   });
 
   document.getElementById('resetBtn').addEventListener('click', () => {
@@ -140,7 +109,7 @@ const TOTAL_COUNTRIES = 192;
     states = {};
     g.selectAll('path.country').attr('fill', COLORS['neutral']);
     saveStates();
-    updateStats();
+    updateStats(states);
   });
 
   document.getElementById('exportBtn').addEventListener('click', () => {
@@ -160,14 +129,13 @@ const TOTAL_COUNTRIES = 192;
     const reader = new FileReader();
     reader.onload = e => {
       try {
-        const obj = JSON.parse(e.target.result);
-        states = obj || {};
+        states = JSON.parse(e.target.result) || {};
         g.selectAll('path.country').each(function(d){
           const col = COLORS[states[d.id] || 'neutral'];
           d3.select(this).attr('fill', col);
         });
         saveStates();
-        updateStats();
+        updateStats(states);
       } catch (err) {
         alert('Invalid JSON file.');
       }
@@ -175,14 +143,6 @@ const TOTAL_COUNTRIES = 192;
     reader.readAsText(f);
   });
 
-  countryPaths.attr('fill', d => COLORS[states[d.id] || 'neutral']);
-  updateStats();
-
-  window.addEventListener('resize', () => {
-    const w = Math.max(800, window.innerWidth - 380);
-    const h = Math.max(400, window.innerHeight - 40);
-    svg.attr('viewBox', `0 0 ${w} ${h}`);
-    projection.translate([w/2, h/2]).scale((w / 640) * 100);
-    countryPaths.attr('d', path);
-  });
+  updateStats(states);
+  setupStatsNavigation();
 })();

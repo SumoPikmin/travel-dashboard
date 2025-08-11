@@ -6,21 +6,22 @@ html, body, .map-wrap {
 
 body {
   display: flex;
-  flex-direction: column;
   height: 100vh;
 }
 
-.top-nav {
-  width: 100%;
-  background-color: #f4f4f4;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  padding: 15px 30px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+.sidebar {
+  width: 385px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #e8e8e8;
+  background: #fafafa;
+  overflow-y: auto;
+}
+
+.sidebar-nav {
   display: flex;
-  justify-content: center;
-  gap: 12px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .nav-btn {
@@ -36,15 +37,6 @@ body {
 
 .nav-btn:hover {
   background: rgba(0,0,0,0.05);
-}
-
-.sidebar {
-  width: 385px;
-  padding: 20px;
-  box-sizing: border-box;
-  border-right: 1px solid #e8e8e8;
-  background: #fafafa;
-  overflow-y: auto;
 }
 
 .map-wrap {

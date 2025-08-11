@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="top-nav">
-    <button id="homeBtn" class="nav-btn">Map</button>
-    <button id="statsBtn" class="nav-btn">Stats</button>
-  </div>
-
   <div class="sidebar">
+    <div class="sidebar-nav">
+      <button id="homeBtn" class="nav-btn">Map</button>
+      <button id="statsBtn" class="nav-btn">Stats</button>
+    </div>
+
     <div id="mapView">
       <h2>Travel Map</h2>
       <p>Mark countries as <strong>neutral</strong>, <strong>been</strong> or <strong>want to go</strong>. Click countries on the map to cycle the status or use the search box below.</p>
@@ -65,6 +65,7 @@
 
   <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script src="stats.js"></script>
   <script src="map.js"></script>
 </body>
 </html>
