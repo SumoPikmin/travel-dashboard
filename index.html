@@ -36,48 +36,50 @@
   const searchInput = document.getElementById("searchInput");
   const suggestions = document.getElementById("suggestions");
 
-  searchInput.addEventListener("input", () => {
-    const input = searchInput.value.toLowerCase().trim();
-    suggestions.innerHTML = "";
+ searchInput.addEventListener("input", () => {
+  const input = searchInput.value.toLowerCase().trim();
+  suggestions.innerHTML = "";
 
-    if (!input) {
+  if (!input) {
+    suggestions.style.display = "none";
+    return;
+  }
+
+  const filtered = countries.filter(country => {
+    const words = country.toLowerCase().split(/\s+/);
+    return words.some(word => word.startsWith(input));
+  });
+
+  if (filtered.length === 0) {
+    suggestions.style.display = "none";
+    return;
+  }
+
+  filtered.forEach(country => {
+    const li = document.createElement("li");
+    li.textContent = country;
+    li.style.padding = "8px";
+    li.style.cursor = "pointer";
+
+    li.addEventListener("click", () => {
+      searchInput.value = country;
       suggestions.style.display = "none";
-      return;
-    }
-
-    const filtered = countries.filter(country =>
-      country.toLowerCase().startsWith(input)
-    );
-
-    if (filtered.length === 0) {
-      suggestions.style.display = "none";
-      return;
-    }
-
-    filtered.forEach(country => {
-      const li = document.createElement("li");
-      li.textContent = country;
-      li.style.padding = "8px";
-      li.style.cursor = "pointer";
-
-      li.addEventListener("click", () => {
-        searchInput.value = country;
-        suggestions.style.display = "none";
-      });
-
-      li.addEventListener("mouseover", () => {
-        li.style.backgroundColor = "#eee";
-      });
-
-      li.addEventListener("mouseout", () => {
-        li.style.backgroundColor = "white";
-      });
-
-      suggestions.appendChild(li);
     });
 
-    suggestions.style.display = "block";
+    li.addEventListener("mouseover", () => {
+      li.style.backgroundColor = "#eee";
+    });
+
+    li.addEventListener("mouseout", () => {
+      li.style.backgroundColor = "white";
+    });
+
+    suggestions.appendChild(li);
   });
+
+  suggestions.style.display = "block";
+});
+
 
   // Hide suggestions when clicking outside the search box
   document.addEventListener("click", (event) => {
