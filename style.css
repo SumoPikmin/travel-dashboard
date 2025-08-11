@@ -103,6 +103,16 @@ select, button {
   max-width: 220px;
 }
 
+.tooltip img.flag-icon {
+  vertical-align: middle;
+  width: 24px;
+  height: auto;
+  margin-right: 6px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+
 .controls {
   margin-top: 20px;
   display:flex;
