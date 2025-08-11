@@ -9,13 +9,13 @@
 </head>
 <body>
   <div class="sidebar">
-    <div class="sidebar-nav top-bar">
-      <h1 class="sidebar-title">Travel Dashboard</h1>
-      <div class="nav-buttons">
-        <button id="homeBtn" class="nav-btn">Home</button>
-        <button id="statsBtn" class="nav-btn">Stats</button>
-      </div>
+  <div class="sidebar-nav top-bar">
+    <h1 class="sidebar-title">Travel Dashboard</h1>
+    <div class="nav-buttons">
+      <button id="homeBtn" class="nav-btn">Home</button>
+      <button id="statsBtn" class="nav-btn">Stats</button>
     </div>
+  </div>
 
     <script>
     const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
@@ -88,15 +88,13 @@
       </ul>
     </div>
 
-    <div id="statsView" style="display:none;">
-      <h2>Stats</h2>
-      <div class="progress-circle" id="progressCircle">
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          <circle class="progress-bg" cx="60" cy="60" r="54" />
-          <circle class="progress-bar" cx="60" cy="60" r="54" />
-          <text id="progressText" x="60" y="68" text-anchor="middle" font-size="24" fill="#1d3557">0%</text>
-        </svg>
-      </div>
+    <div class="progress-circle">
+    <svg width="120" height="120" viewBox="0 0 120 120">
+      <circle class="progress-bg" cx="60" cy="60" r="54" />
+      <circle class="progress-bar" cx="60" cy="60" r="54" />
+      <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
+    </svg>
+  </div>
        <p id="statsSummary">Loading stats...</p>
     </div>
   </div>
