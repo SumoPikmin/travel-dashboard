@@ -267,7 +267,7 @@ svg {
   user-select: none;
 }
 
-/* ===== Content Transition ===== */
+/* ===== Content Transition ===== 
 #homeContent, #statsContent {
   opacity: 0;
   visibility: hidden;
@@ -278,3 +278,4 @@ svg {
   opacity: 1;
   visibility: visible;
 }
+  */
