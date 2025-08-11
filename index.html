@@ -18,6 +18,16 @@
       </div>
     </div>
 
+      <script>
+    // Ensure states is global
+    window.states = {};
+  </script>
+
+  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script src="map.js"></script>
+  <!-- <script src="stats.js"></script>-->
+
     <!-- Home content -->
     <div id="homeContent">
       <hr />
@@ -100,16 +110,6 @@
     <svg id="map"></svg>
     <div class="footer">Tip: use zoom (mouse wheel) and drag to pan</div>
   </div>
-
-  <script>
-    // Ensure states is global
-    window.states = {};
-  </script>
-
-  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
-  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-  <script src="map.js"></script>
-  <!-- <script src="stats.js"></script>-->
   
 
   <script>
@@ -168,7 +168,6 @@
 
       // Start on Home tab by default
       showTab('homeContent');
-      showTab('statsContent');
     });
   </script>
 </body>
