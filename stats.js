@@ -1,37 +1,26 @@
-window.updateStats = function() {
-  // Assuming window.states holds the country status info
-  const states = window.states || {};
-  const totalCountries = Object.keys(states).length || 0;
+const TOTAL_COUNTRIES = 195;
 
-  let beenCount = 0;
-  let wantCount = 0;
-
-  for (const key in states) {
-    if (states[key] === 'been') beenCount++;
-    else if (states[key] === 'want') wantCount++;
+function updateStats(states) {
+  const statsContent = document.getElementById('statsContent');
+  if (!statsContent || statsContent.style.display === 'none') {
+    (!confirm('Do you want to remove all marks?'))
+    return; // Skip if stats section is hidden
   }
 
-  const totalKnown = beenCount + wantCount;
-  const percentBeen = totalCountries > 0 ? Math.round((beenCount / totalCountries) * 100) : 0;
+  const visitedCount = Object.values(states).filter(v => v === 'been').length;
+  const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
 
-  // Update progress circle
-  const progressBar = document.querySelector('.progress-bar');
-  const progressText = document.getElementById('progressText');
-  const statsSummary = document.getElementById('statsSummary');
+  document.getElementById('statsSummary').innerHTML =
+    `<strong>Visited Countries: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)</strong>`;
 
+  const circle = document.querySelector('.progress-bar');
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (circumference * percentBeen) / 100;
+  const offset = circumference - (percent / 100) * circumference;
+  circle.style.strokeDashoffset = offset;
 
-  if (progressBar) {
-    progressBar.style.strokeDashoffset = offset;
-  }
+  document.getElementById('progressText').textContent = `${percent}%`;
+}
 
-  if (progressText) {
-    progressText.textContent = `${percentBeen}%`;
-  }
-
-  if (statsSummary) {
-    statsSummary.textContent = `You have visited ${beenCount} countries out of ${totalCountries} marked. Want to go: ${wantCount} countries.`;
-  }
-};
+// Expose globally so other scripts can call it
+window.updateStats = updateStats;
