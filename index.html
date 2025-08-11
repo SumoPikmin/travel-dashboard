@@ -126,21 +126,22 @@
       <div class="item"><div class="swatch" style="background: #ffd166"></div> <div>Want to go (warm yellow)</div></div>
     </div>
 
+     <div class="note">Status is not saved automatically. To permanently save progress use the underlying button.</div>
+
+
     <div class="controls">
       <button id="resetBtn">Reset</button>
-      <button id="exportBtn">Export JSON</button>
-      <button id="importBtn">Import JSON</button>
+      <button id="exportBtn">Save Progress</button>
+      <button id="importBtn">Load Progress</button>
       <input id="fileInput" type="file" accept="application/json" style="display:none" />
     </div>
-
-    <div class="note">Status is saved locally in your browser using <code>localStorage</code>. Click a country on the map to cycle states: Neutral → Been → Want → Neutral.</div>
 
     <hr style="margin:16px 0" />
     <div><strong>Quick actions</strong>
       <ul>
-        <li>Hover countries to see their name.</li>
-        <li>Click to cycle status.</li>
-        <li>Search + Apply to set a country status directly.</li>
+        <li>Hover over countries to see their name.</li>
+        <li>Click on countries to change their status. (Neutral → Been → Want → Neutral)</li>
+        <li>Search + Apply/ Enter to set a country status directly.</li>
       </ul>
     </div>
   </div>
@@ -157,7 +158,6 @@
 
   <script>
     const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
-
     (async function(){
       // Load the local topojson file (make sure data/countries-110m.json exists)
       const resp = await fetch('data/countries-110m.json');
@@ -268,9 +268,9 @@
 
       applyBtn.addEventListener('click', () => {
         const q = input.value.trim().toLowerCase();
-        if (!q) return alert('Bitte gib einen Ländernamen ein.');
+        if (!q) return alert('Please enter another country name.');
         const match = Object.keys(nameIndex).find(k => k.includes(q));
-        if (!match) return alert('Land nicht gefunden. Bitte genaueren Namen versuchen.');
+        if (!match) return alert('Country not found. Try another name.');
         const f = nameIndex[match];
         const chosen = select.value;
         if (chosen === 'neutral') delete states[f.id]; else states[f.id] = chosen;
@@ -285,7 +285,7 @@
 
       // Reset
       document.getElementById('resetBtn').addEventListener('click', () => {
-        if (!confirm('Alle Markierungen entfernen?')) return;
+        if (!confirm('Do you want to remove all marks?')) return;
         states = {};
         g.selectAll('path.country').attr('fill', COLORS['neutral']);
         saveStates();
@@ -297,7 +297,7 @@
         const blob = new Blob([dataStr], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = 'travel-map-states.json'; a.click();
+        a.href = url; a.download = 'travel-map-progress.json'; a.click();
         URL.revokeObjectURL(url);
       });
 
@@ -317,7 +317,7 @@
             });
             saveStates();
           } catch (err) {
-            alert('Ungültige JSON-Datei.');
+            alert('Invalid JSON-file.');
           }
         };
         reader.readAsText(f);
