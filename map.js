@@ -1,4 +1,3 @@
-// Navigation toggle
 document.getElementById('homeBtn').addEventListener('click', () => {
   document.getElementById('mapView').style.display = '';
   document.getElementById('statsView').style.display = 'none';
@@ -8,9 +7,11 @@ document.getElementById('statsBtn').addEventListener('click', () => {
   document.getElementById('mapView').style.display = 'none';
   document.getElementById('statsView').style.display = '';
   document.querySelector('.map-wrap').style.display = 'none';
+  updateStats();
 });
 
 const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
+const TOTAL_COUNTRIES = 192;
 
 (async function(){
   const resp = await fetch('data/countries-110m.json');
@@ -74,6 +75,7 @@ const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
       cycleState(d);
       updateVisual(d);
       saveStates();
+      updateStats();
     });
 
   const tooltip = d3.select('#tooltip');
@@ -106,6 +108,13 @@ const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
   }
 
+  function updateStats(){
+    const visitedCount = Object.values(states).filter(v => v === 'been').length;
+    const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
+    document.getElementById('statsSummary').textContent =
+      `Visited: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)`;
+  }
+
   const input = document.getElementById('searchInput');
   const select = document.getElementById('statusSelect');
   const applyBtn = document.getElementById('applyBtn');
@@ -119,6 +128,7 @@ const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
     if (chosen === 'neutral') delete states[f.id]; else states[f.id] = chosen;
     updateVisual(f);
     saveStates();
+    updateStats();
     input.value = '';
   });
   input.addEventListener('keydown', (e) => {
@@ -130,6 +140,7 @@ const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
     states = {};
     g.selectAll('path.country').attr('fill', COLORS['neutral']);
     saveStates();
+    updateStats();
   });
 
   document.getElementById('exportBtn').addEventListener('click', () => {
@@ -156,6 +167,7 @@ const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
           d3.select(this).attr('fill', col);
         });
         saveStates();
+        updateStats();
       } catch (err) {
         alert('Invalid JSON file.');
       }
@@ -164,6 +176,7 @@ const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
   });
 
   countryPaths.attr('fill', d => COLORS[states[d.id] || 'neutral']);
+  updateStats();
 
   window.addEventListener('resize', () => {
     const w = Math.max(800, window.innerWidth - 380);

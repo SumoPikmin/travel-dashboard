@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="sidebar">
-    <div class="nav-buttons">
-      <button id="homeBtn">Home</button>
-      <button id="statsBtn">Stats</button>
-    </div>
+  <div class="top-nav">
+    <button id="homeBtn" class="nav-btn">Map</button>
+    <button id="statsBtn" class="nav-btn">Stats</button>
+  </div>
 
+  <div class="sidebar">
     <div id="mapView">
       <h2>Travel Map</h2>
       <p>Mark countries as <strong>neutral</strong>, <strong>been</strong> or <strong>want to go</strong>. Click countries on the map to cycle the status or use the search box below.</p>
@@ -53,7 +53,7 @@
 
     <div id="statsView" style="display:none;">
       <h2>Stats</h2>
-      <p>Coming soon...</p>
+      <p id="statsSummary">Visited: 0 / 192 (0%)</p>
     </div>
   </div>
 
