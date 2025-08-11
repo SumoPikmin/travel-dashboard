@@ -13,7 +13,7 @@
     <div class="sidebar-nav top-bar">
       <h1 class="sidebar-title">Travel Dashboard</h1>
       <div class="nav-buttons">
-        <button id="homeBtn" class="nav-btn">Home</button>
+        <button id="homeBtn" class="nav-btn active">Home</button>
         <button id="statsBtn" class="nav-btn">Stats</button>
       </div>
     </div>
@@ -85,7 +85,7 @@
       <div class="progress-circle">
         <svg width="120" height="120" viewBox="0 0 120 120">
           <circle class="progress-bg" cx="60" cy="60" r="54" />
-          <circle class="progress-bar" cx="60" cy="60" r="54" />
+          <circle class="progress-bar" cx="60" cy="60" r="54" stroke="#8ecae6" stroke-width="12" fill="none" stroke-dasharray="339.292" stroke-dashoffset="339.292" />
           <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
         </svg>
       </div>
@@ -100,8 +100,8 @@
     <div class="footer">Tip: use zoom (mouse wheel) and drag to pan</div>
   </div>
 
-    <script>
-  // Ensure states is global
+  <script>
+    // Ensure states is global
     window.states = {};
   </script>
 
@@ -110,10 +110,10 @@
   <script src="map.js"></script>
   <script src="stats.js"></script>
 
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const countries = [
+        // ... same country list as before ...
         "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
         "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
         "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
@@ -136,87 +136,36 @@
         "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
       ];
 
-      const searchInput = document.getElementById("searchInput");
-      const suggestions = document.getElementById("suggestions");
-
-      searchInput.addEventListener("input", () => {
-        const input = searchInput.value.toLowerCase().trim();
-        suggestions.innerHTML = "";
-
-        if (!input) {
-          suggestions.style.display = "none";
-          return;
-        }
-
-        const filtered = countries.filter(country => {
-          const words = country.toLowerCase().split(/\s+/);
-          return words.some(word => word.startsWith(input));
-        });
-
-        if (filtered.length === 0) {
-          suggestions.style.display = "none";
-          return;
-        }
-
-        filtered.forEach(country => {
-          const li = document.createElement("li");
-          li.textContent = country;
-          li.style.padding = "8px";
-          li.style.cursor = "pointer";
-
-          li.addEventListener("click", () => {
-            searchInput.value = country;
-            suggestions.style.display = "none";
-          });
-
-          li.addEventListener("mouseover", () => {
-            li.style.backgroundColor = "#eee";
-          });
-
-          li.addEventListener("mouseout", () => {
-            li.style.backgroundColor = "white";
-          });
-
-          suggestions.appendChild(li);
-        });
-
-        suggestions.style.display = "block";
-      });
-
-      // Hide suggestions when clicking outside the search box
-      document.addEventListener("click", (event) => {
-        if (!event.target.closest(".search")) {
-          suggestions.style.display = "none";
-        }
-      });
-
-      // Toggle between Home and Stats content
+      // Show / hide tabs
       const homeBtn = document.getElementById('homeBtn');
       const statsBtn = document.getElementById('statsBtn');
       const homeContent = document.getElementById('homeContent');
       const statsContent = document.getElementById('statsContent');
 
-      function setActive(button) {
-        homeBtn.classList.remove('active');
-        statsBtn.classList.remove('active');
-        button.classList.add('active');
+      function showTab(tabId) {
+        if (tabId === 'homeContent') {
+          homeContent.classList.add('active');
+          statsContent.classList.remove('active');
+          homeBtn.classList.add('active');
+          statsBtn.classList.remove('active');
+        } else if (tabId === 'statsContent') {
+          homeContent.classList.remove('active');
+          statsContent.classList.add('active');
+          homeBtn.classList.remove('active');
+          statsBtn.classList.add('active');
+
+          // Refresh stats data every time stats tab is shown
+          if (window.updateStats) {
+            window.updateStats();
+          }
+        }
       }
 
-      homeBtn.addEventListener('click', () => {
-        homeContent.style.display = 'block';
-        statsContent.style.display = 'none';
-        setActive(homeBtn);
-      });
+      homeBtn.addEventListener('click', () => showTab('homeContent'));
+      statsBtn.addEventListener('click', () => showTab('statsContent'));
 
-      statsBtn.addEventListener('click', () => {
-        homeContent.style.display = 'none';
-        statsContent.style.display = 'block';
-        setActive(statsBtn);
-        updateStats(window.states);
-      });
-
-      // Initialize with Home active
-      setActive(homeBtn);
+      // Start on Home tab by default
+      showTab('homeContent');
     });
   </script>
 </body>
