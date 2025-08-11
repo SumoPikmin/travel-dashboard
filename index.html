@@ -91,7 +91,8 @@
     </div>
 
     <!-- Stats content -->
-    <div id="statsContent">
+    <div id="statsContent" style="display:none; padding: 0 10px;">
+      <h2>Statistics</h2>
       <div id="statsSummary"></div>
         <svg width="120" height="120">
           <circle
@@ -105,7 +106,7 @@
             style="stroke-dasharray: 339.292; stroke-dashoffset: 339.292;"
           ></circle>
         </svg>
-        <div id="progressText">0%</div>
+        <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
       <p id="statsSummary">Loading stats...</p>
       <p>This section will display your travel statistics and charts.</p>
     </div>
