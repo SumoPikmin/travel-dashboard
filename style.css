@@ -31,18 +31,17 @@ body {
 
 /* ===== Sidebar ===== */
 .sidebar {
-  width: 400px;
-  padding: 20px;
+  width: 480px;  /* Increased from 400px */
+  padding: 24px; /* Slightly more padding */
   border-right: 1px solid var(--color-border-light);
   background: var(--color-bg);
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .sidebar-title {
-  text-align: center;
-  margin: 0 0 16px;
-  font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .sidebar-nav {
@@ -104,11 +103,12 @@ button:focus, select:focus, input:focus {
 
 /* ===== Map Wrapper & SVG ===== */
 .map-wrap {
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #e5e5e5;
+  min-width: 0; /* prevent overflow */
 }
 
 svg {
@@ -121,8 +121,19 @@ svg {
 .search {
   position: relative;
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 12px; /* slightly larger gap */
+  margin-bottom: 16px; /* more space below */
+  flex-wrap: wrap; /* allow wrapping on narrow widths */
+}
+
+.search input#searchInput {
+  flex-grow: 1; /* grow input to fill space */
+  min-width: 150px;
+  font-size: 1rem;
+}
+
+.search select#statusSelect {
+  min-width: 140px;
 }
 
 #suggestions {
