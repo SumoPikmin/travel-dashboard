@@ -1,6 +1,8 @@
+/* ===== Reset & Base Styles ===== */
 html, body, .map-wrap {
   height: 100%;
-  margin: 0; padding: 0;
+  margin: 0; 
+  padding: 0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
@@ -9,6 +11,7 @@ body {
   height: 100vh;
 }
 
+/* ===== Sidebar Styles ===== */
 .sidebar {
   width: 400px;
   padding: 20px;
@@ -18,12 +21,31 @@ body {
   overflow-y: auto;
 }
 
+/* Sidebar navigation buttons container */
 .sidebar-nav {
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
 }
 
+/* Stack title and buttons vertically */
+.sidebar-nav.top-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* left align */
+  gap: 8px; /* spacing between title and buttons */
+  margin-bottom: 20px;
+}
+
+/* Buttons stacked vertically */
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%; /* optional: full width buttons */
+}
+
+/* Sidebar navigation buttons */
 .nav-btn {
   background: none;
   border: none;
@@ -35,10 +57,12 @@ body {
   border-radius: 6px;
 }
 
+/* Hover state for nav buttons */
 .nav-btn:hover {
   background: rgba(0,0,0,0.05);
 }
 
+/* ===== Map Wrapper Styles ===== */
 .map-wrap {
   flex: 1;
   display: flex;
@@ -48,18 +72,21 @@ body {
   background: #e5e5e5;
 }
 
+/* Make SVG fill the container */
 svg {
   width: 100%;
   height: 100%;
   display: block;
 }
 
+/* ===== Search Box Styles ===== */
 .search {
-  display:flex;
-  gap:8px;
+  display: flex;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
+/* Text input in search */
 input[type=text] {
   flex: 1;
   padding: 8px 10px;
@@ -67,6 +94,7 @@ input[type=text] {
   border: 1px solid #ddd;
 }
 
+/* Select dropdown and buttons */
 select, button {
   padding: 8px 10px;
   border-radius: 8px;
@@ -75,34 +103,81 @@ select, button {
   cursor: pointer;
 }
 
+/* ===== Progress Circle Styles ===== */
+.progress-circle {
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+  position: relative;
+}
+
+/* Rotate SVG to start circle from top */
+.progress-circle svg {
+  transform: rotate(-90deg);
+}
+
+/* Background circle */
+.progress-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 12;
+}
+
+/* Foreground progress bar */
+.progress-bar {
+  fill: none;
+  stroke: #8ecae6;
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 339.292; /* 2 * π * r (r=54) */
+  stroke-dashoffset: 339.292; /* initially hidden */
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+/* Center text inside the progress circle */
+#progressText {
+  transform: rotate(90deg);
+  dominant-baseline: middle;
+  font-weight: bold;
+  fill: #333;
+  user-select: none;
+}
+
+/* ===== Legend Styles ===== */
 .legend {
   margin-top: 16px;
 }
+
+/* Each legend item */
 .legend .item {
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-bottom:8px;
-}
-.swatch {
-  width:22px;
-  height:14px;
-  border:1px solid #ccc;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
+/* Color swatches in legend */
+.swatch {
+  width: 22px;
+  height: 14px;
+  border: 1px solid #ccc;
+}
+
+/* ===== Tooltip Styles ===== */
 .tooltip {
   position: absolute;
   pointer-events: none;
-  padding:6px 8px;
+  padding: 6px 8px;
   background: rgba(0,0,0,0.75);
   color: white;
-  border-radius:6px;
-  font-size:13px;
-  display:none;
+  border-radius: 6px;
+  font-size: 13px;
+  display: none;
   z-index: 10;
   max-width: 220px;
 }
 
+/* Flag icon inside tooltip */
 .tooltip img.flag-icon {
   vertical-align: middle;
   width: 24px;
@@ -112,32 +187,35 @@ select, button {
   border-radius: 2px;
 }
 
-
+/* ===== Controls Styles ===== */
 .controls {
   margin-top: 20px;
-  display:flex;
-  gap:8px;
+  display: flex;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
+/* Notes under controls */
 .note {
-  margin-top:12px;
-  font-size:13px;
-  color:#555;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #555;
 }
 
+/* Country name text */
 .country-name {
-  font-weight:600;
+  font-weight: 600;
 }
 
+/* ===== Footer Styles ===== */
 .footer {
   position: absolute;
   right: 12px;
   bottom: 12px;
   background: rgba(255,255,255,0.9);
-  padding:8px 10px;
-  border-radius:8px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
-  font-size:13px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  font-size: 13px;
   user-select: none;
 }
