@@ -35,6 +35,47 @@
   };
 
   const nameIndex = {};
+  const searchInput = document.getElementById('searchInput');
+const suggestions = document.getElementById('suggestions');
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+  suggestions.innerHTML = '';
+  if (!query) {
+    suggestions.style.display = 'none';
+    return;
+  }
+  
+  // Find matches from nameIndex keys (country names)
+  const matches = Object.keys(nameIndex).filter(name => name.includes(query));
+  if (matches.length === 0) {
+    suggestions.style.display = 'none';
+    return;
+  }
+  
+  // Show suggestions list
+  matches.forEach(match => {
+    const li = document.createElement('li');
+    // Capitalize first letter for display
+    li.textContent = match.charAt(0).toUpperCase() + match.slice(1);
+    li.addEventListener('click', () => {
+      // On click, fill input, hide suggestions
+      searchInput.value = li.textContent;
+      suggestions.style.display = 'none';
+    });
+    suggestions.appendChild(li);
+  });
+  
+  suggestions.style.display = 'block';
+});
+
+// Hide suggestions if clicking outside
+document.addEventListener('click', (e) => {
+  if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+    suggestions.style.display = 'none';
+  }
+});
+
   countries.forEach(f => {
     const id = f.id;
     const name = idToName[id] || (f.properties && (f.properties.name || f.properties.NAME)) || ('Country ' + id);
