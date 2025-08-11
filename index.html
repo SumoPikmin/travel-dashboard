@@ -206,6 +206,9 @@
         homeContent.style.display = 'none';
         statsContent.style.display = 'block';
         setActive(statsBtn);
+        if (typeof states == 'undefined') {
+          states = {}
+        }
         updateStats(states);
       });
 
