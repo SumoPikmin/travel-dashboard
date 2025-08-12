@@ -164,7 +164,7 @@
           statsBtn.classList.add('active');
 
           if (window.updateStats) {
-            window.updateStats();
+            setTimeout(window.updateStats, 0); // ensures DOM updates first
           }
         }
       }

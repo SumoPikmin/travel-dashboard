@@ -3,7 +3,7 @@ const TOTAL_COUNTRIES = 195;
 window.updateStats = function updateStats() {
   const statsContent = document.getElementById('statsContent');
   // If stats tab is not visible, skip updating
-  if (!statsContent || statsContent.style.display === 'none') return;
+  // if (!statsContent || statsContent.style.display === 'none') return;
 
   // Get visited count from global states object
   const visitedCount = Object.values(window.states).filter(v => v === 'been').length;
