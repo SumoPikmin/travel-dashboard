@@ -28,17 +28,19 @@ body {
   display: flex;
   height: 100vh;
   line-height: 1.5;
-  flex-direction: row;
+  flex-direction: row;  /* keep row on desktop */
+  overflow: hidden;     /* prevent overflow */
 }
 
 /* ===== Sidebar ===== */
 .sidebar {
-  width: 480px;  /* Increased from 400px */
-  padding: 24px; /* Slightly more padding */
+  width: 480px;
+  padding: 24px;
   border-right: 1px solid var(--color-border-light);
   background: var(--color-bg);
   overflow-y: auto;
   box-sizing: border-box;
+  flex-shrink: 0;  /* prevent sidebar from shrinking */
 }
 
 /* Scrollbar styles for sidebar */
@@ -134,12 +136,15 @@ input[type=text]::placeholder {
 
 /* ===== Map Wrapper & SVG ===== */
 .map-wrap {
-  flex: 1 1 auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;    /* important: lets map-wrap take all remaining space */
   display: flex;
   align-items: center;
   justify-content: center;
   background: #e5e5e5;
-  min-width: 0; /* prevent overflow */
+  min-width: 0;     /* prevent overflow */
+  height: 100vh;    /* full height */
 }
 
 svg {
@@ -321,6 +326,7 @@ svg {
 }
 
 /* ===== Responsive Sidebar ===== */
+/*
 @media (max-width: 600px) {
   .sidebar {
     width: 100%;
@@ -336,6 +342,7 @@ svg {
     height: 60vh;
   }
 }
+*/
 
 /* ===== Reduced Motion Preference ===== */
 @media (prefers-reduced-motion: reduce) {
