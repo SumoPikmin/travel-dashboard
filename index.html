@@ -91,7 +91,7 @@
     </div>
 
     <!-- Stats content -->
-    <div id="statsContent" style="display:none; padding: 0 10px;">
+    <div id="statsContent" style="padding: 0 10px;">
       <h2>Statistics</h2>
       <div id="statsSummary"></div>
         <svg width="120" height="120">
@@ -153,22 +153,22 @@
 
       function showTab(tabId) {
         if (tabId === 'homeContent') {
-          homeContent.classList.add('active');
-          statsContent.classList.remove('active');
+          homeContent.style.display = 'block';
+          statsContent.style.display = 'none';
           homeBtn.classList.add('active');
           statsBtn.classList.remove('active');
         } else if (tabId === 'statsContent') {
-          homeContent.classList.remove('active');
-          statsContent.classList.add('active');
+          homeContent.style.display = 'none';
+          statsContent.style.display = 'block';
           homeBtn.classList.remove('active');
           statsBtn.classList.add('active');
 
-          // Refresh stats data every time stats tab is shown
           if (window.updateStats) {
             window.updateStats();
           }
         }
       }
+
 
       homeBtn.addEventListener('click', () => showTab('homeContent'));
       statsBtn.addEventListener('click', () => showTab('statsContent'));
