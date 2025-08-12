@@ -1,10 +1,11 @@
 const TOTAL_COUNTRIES = 195;
 
-function updateStats(states) {
+
+window.updateStats = function updateStats(states) {
   const statsContent = document.getElementById('statsContent');
-  if (!statsContent || statsContent.style.display === 'none') {
-    return; // Skip if stats section is hidden
-  }
+  if (!statsContent || !statsContent.classList.contains('active')) {
+  return;
+}
 
   const visitedCount = Object.values(states).filter(v => v === 'been').length;
   const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
@@ -22,4 +23,5 @@ function updateStats(states) {
 }
 
 // Expose globally so other scripts can call it
-window.updateStats = updateStats;
+
+
