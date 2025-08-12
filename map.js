@@ -1,6 +1,4 @@
 
-const TOTAL_COUNTRIES = 195;
-
 (async function() {
   // Fetch map data
   const resp = await fetch('data/countries-110m.json');

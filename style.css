@@ -14,6 +14,7 @@
 /* ===== Reset & Base Styles ===== */
 * {
   box-sizing: border-box;
+  transition: background var(--transition-speed) ease, border var(--transition-speed) ease;
 }
 
 html, body, .map-wrap {
@@ -27,6 +28,7 @@ body {
   display: flex;
   height: 100vh;
   line-height: 1.5;
+  flex-direction: row;
 }
 
 /* ===== Sidebar ===== */
@@ -37,6 +39,18 @@ body {
   background: var(--color-bg);
   overflow-y: auto;
   box-sizing: border-box;
+}
+
+/* Scrollbar styles for sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .sidebar-title {
@@ -72,16 +86,27 @@ button, select, input[type=text] {
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--transition-speed) ease, border var(--transition-speed) ease;
 }
 
 button:hover, select:hover {
   background: var(--color-bg-hover);
 }
 
+/* Accessibility: focus-visible for keyboard users */
+button:focus-visible, select:focus-visible, input:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 button:focus, select:focus, input:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* Placeholder color */
+input[type=text]::placeholder {
+  color: #999;
+  opacity: 1; /* Firefox fix */
 }
 
 /* Nav button overrides */
@@ -90,15 +115,21 @@ button:focus, select:focus, input:focus {
   border: none;
   padding: 8px 16px;
   border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: background var(--transition-speed) ease;
+  cursor: pointer;
 }
 
-.nav-btn:hover {
+.nav-btn:hover,
+.nav-btn:focus-visible {
   background: var(--color-bg-hover);
+  outline: none;
 }
 
 .nav-btn.active {
   background-color: var(--color-accent);
   color: white;
+  font-weight: 600;
 }
 
 /* ===== Map Wrapper & SVG ===== */
@@ -148,6 +179,18 @@ svg {
   margin: 0; padding: 0;
   z-index: 1000;
   display: none;
+}
+
+/* Scrollbar styles for suggestions */
+#suggestions::-webkit-scrollbar {
+  width: 8px;
+}
+#suggestions::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+#suggestions::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 #suggestions li {
@@ -277,3 +320,26 @@ svg {
   display: block;
 }
 
+/* ===== Responsive Sidebar ===== */
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    height: 40vh;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-light);
+    padding: 16px;
+  }
+  body {
+    flex-direction: column;
+  }
+  .map-wrap {
+    height: 60vh;
+  }
+}
+
+/* ===== Reduced Motion Preference ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

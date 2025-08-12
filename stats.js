@@ -22,6 +22,4 @@ window.updateStats = function updateStats(states) {
   document.getElementById('progressText').textContent = `${percent}%`;
 }
 
-// Expose globally so other scripts can call it
-
 
