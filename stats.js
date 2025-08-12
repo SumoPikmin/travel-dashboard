@@ -1,25 +1,30 @@
 const TOTAL_COUNTRIES = 195;
 
-
-window.updateStats = function updateStats(states) {
+window.updateStats = function updateStats() {
   const statsContent = document.getElementById('statsContent');
-  if (!statsContent || !statsContent.classList.contains('active')) {
-  return;
-}
+  // If stats tab is not visible, skip updating
+  if (!statsContent || statsContent.style.display === 'none') return;
 
-  const visitedCount = Object.values(states).filter(v => v === 'been').length;
+  // Get visited count from global states object
+  const visitedCount = Object.values(window.states).filter(v => v === 'been').length;
   const percent = ((visitedCount / TOTAL_COUNTRIES) * 100).toFixed(2);
 
+  // Update text summary
   document.getElementById('statsSummary').innerHTML =
     `<strong>Visited Countries: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)</strong>`;
 
+  // Update progress bar if present
   const circle = document.querySelector('.progress-bar');
-  const radius = 54;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percent / 100) * circumference;
-  circle.style.strokeDashoffset = offset;
+  if (circle) {
+    const radius = 54;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percent / 100) * circumference;
+    circle.style.strokeDashoffset = offset;
+  }
 
-  document.getElementById('progressText').textContent = `${percent}%`;
-}
-
-
+  // Update progress text if present
+  const progressText = document.getElementById('progressText');
+  if (progressText) {
+    progressText.textContent = `${percent}%`;
+  }
+};
