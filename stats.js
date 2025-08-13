@@ -13,16 +13,21 @@ window.updateStats = function updateStats() {
   document.getElementById('statsSummary').innerHTML =
     `<strong>Visited Countries: ${visitedCount} / ${TOTAL_COUNTRIES} (${percent}%)</strong>`;
 
-  // Update progress bar if present
+  // Update progress bar
   const circle = document.querySelector('.progress-bar');
   if (circle) {
     const radius = 54;
     const circumference = 2 * Math.PI * radius;
+
+    // Always set dasharray to full circumference
+    circle.style.strokeDasharray = circumference;
+
+    // Calculate dashoffset based on percent
     const offset = circumference - (percent / 100) * circumference;
     circle.style.strokeDashoffset = offset;
   }
 
-  // Update progress text if present
+  // Update percentage text inside circle
   const progressText = document.getElementById('progressText');
   if (progressText) {
     progressText.textContent = `${percent}%`;

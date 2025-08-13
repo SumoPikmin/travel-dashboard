@@ -97,18 +97,34 @@
       <p id="statsSummary">Loading stats...</p>
       <p>This section will display your travel statistics and charts.</p>
       <svg width="120" height="120">
-        <circle
-          class="progress-bar"
-          stroke="#4caf50"
-          stroke-width="10"
-          fill="none"
-          r="54"
-          cx="60"
-          cy="60"
-          style="stroke-dasharray: 339.292; stroke-dashoffset: 339.292;"
-        ></circle>
-        <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#333"></text>
-      </svg>
+      <!-- Background circle -->
+      <circle
+        stroke="#4caf50"
+        stroke-width="10"
+        fill="none"
+        r="54"
+        cx="60"
+        cy="60"
+        opacity="0.2"
+      ></circle>
+
+      <!-- Progress circle -->
+      <circle
+        class="progress-bar"
+        stroke="#4caf50"
+        stroke-width="10"
+        fill="none"
+        r="54"
+        cx="60"
+        cy="60"
+        stroke-linecap="round"
+        style="transform: rotate(-90deg); transform-origin: 50% 50%;"
+      ></circle>
+
+      <!-- Percentage text -->
+      <text id="progressText" x="60" y="65" text-anchor="middle" font-size="24" fill="#4caf50"></text>
+    </svg>
+
   </div>
 </div>
 
