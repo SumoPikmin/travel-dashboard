@@ -18,11 +18,7 @@ window.updateStats = function updateStats() {
   if (circle) {
     const radius = 54;
     const circumference = 2 * Math.PI * radius;
-
-    // Always set dasharray to full circumference
-    circle.style.strokeDasharray = circumference;
-
-    // Calculate dashoffset based on percent
+    circle.style.strokeDasharray = circumference; // <-- add this
     const offset = circumference - (percent / 100) * circumference;
     circle.style.strokeDashoffset = offset;
   }
