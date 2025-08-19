@@ -94,7 +94,7 @@
 
   function moveTooltip(event) {
     const [x, y] = d3.pointer(event);
-    tooltip.style('left', (x + 20) + 'px').style('top', (y + 20) + 'px');
+    tooltip.style('left', (x + 8) + 'px').style('top', (y + 8) + 'px');
   }
 
   function hideTooltip() {
