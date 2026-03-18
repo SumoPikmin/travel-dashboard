@@ -18,7 +18,7 @@
 
 html, body, .map-wrap {
   height: 100%;
-  margin: 0; 
+  margin: 0;
   padding: 0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
@@ -33,7 +33,7 @@ body {
 
 /* ===== Sidebar ===== */
 .sidebar {
-  width: 480px;  
+  width: 480px;
   padding: 24px;
   border-right: 1px solid var(--color-border-light);
   background: var(--color-bg);
@@ -58,7 +58,6 @@ body {
   align-items: flex-start;
 }
 
-/* Navigation buttons container */
 .nav-buttons {
   display: flex;
   flex-direction: column;
@@ -87,7 +86,6 @@ button:focus, select:focus, input:focus {
   outline-offset: 2px;
 }
 
-/* Nav button overrides */
 .nav-btn {
   background: none;
   border: none;
@@ -186,20 +184,63 @@ svg {
   stroke: #eee;
 }
 
-.progress-bar {
-  stroke: var(--color-accent);
-  stroke-linecap: round;
-  stroke-dasharray: 339.292;
-  stroke-dashoffset: 339.292;
-  transition: stroke-dashoffset 0.6s ease;
-}
-
 #progressText {
   transform: rotate(90deg);
   dominant-baseline: middle;
   font-weight: bold;
   fill: var(--color-text);
   user-select: none;
+}
+
+/* ===== Stats Circles ===== */
+#statsCircles {
+  margin: 16px 0;
+}
+
+.stat-worldwide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.stat-worldwide svg {
+  width: 120px;
+  height: 120px;
+}
+
+.stat-circles-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.stat-circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 80px;
+  min-width: 80px;
+}
+
+.stat-circle-item svg {
+  width: 80px;
+  height: 80px;
+}
+
+.stat-circle-label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.stat-circle-sub {
+  font-size: 11px;
+  color: #888;
+  text-align: center;
 }
 
 /* ===== Legend ===== */
@@ -278,11 +319,6 @@ svg {
   display: none;
 }
 
-#homeContent.active,
-#statsContent.active {
-  display: block;
-}
-
 /* ===== Responsive Layout ===== */
 @media (max-width: 600px) {
   body {
@@ -301,4 +337,242 @@ svg {
     height: 60vh;
     min-width: 100%;
   }
+}
+
+/* ===== Country List ===== */
+.cl-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.cl-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cl-filter-btn {
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cl-filter-btn.active,
+.cl-filter-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+.cl-section {
+  margin-bottom: 4px;
+}
+
+.cl-letter-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-border-light);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background 0.2s;
+}
+
+.cl-letter-header:hover {
+  background: #e0e0e0;
+}
+
+.cl-letter {
+  flex: 1;
+  text-align: left;
+}
+
+.cl-chevron {
+  font-size: 12px;
+  color: #888;
+}
+
+.cl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 8px;
+}
+
+.cl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  transition: background 0.15s;
+}
+
+.cl-item:hover {
+  background: var(--color-bg-hover);
+}
+
+.cl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.cl-been .cl-dot { background: #8ecae6; border-color: #8ecae6; }
+.cl-want .cl-dot { background: #ffd166; border-color: #ffd166; }
+
+.cl-name {
+  flex: 1;
+}
+
+.cl-badge {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+}
+
+.cl-been .cl-badge { color: #2a9d8f; }
+.cl-want .cl-badge { color: #e0a020; }
+
+.cl-item.hidden { display: none; }
+
+/* ===== Wonders Tab ===== */
+.wonders-section-toggle {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.wonders-seg-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.wonders-seg-btn:hover {
+  background: var(--color-bg-hover);
+}
+
+.wonders-seg-btn.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+.wonders-summary {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 12px;
+}
+
+.wonders-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.wonders-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px;
+  border-radius: var(--radius-md);
+  transition: background 0.15s;
+}
+
+.wonders-item:hover {
+  background: var(--color-bg-hover);
+}
+
+.wonders-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.wonders-item-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.wonders-item-land {
+  font-size: 12px;
+  color: #888;
+}
+
+.wonders-item-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.wonders-status-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: white;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  color: #aaa;
+}
+
+.wonders-status-btn:hover {
+  border-color: #aaa;
+  color: #555;
+}
+
+.wonders-status-btn.active-been {
+  background: #8ecae6;
+  border-color: #8ecae6;
+  color: white;
+}
+
+.wonders-status-btn.active-want {
+  background: #ffd166;
+  border-color: #ffd166;
+  color: white;
+}
+
+.wonders-status-btn.active-neutral {
+  background: #e0e0e0;
+  border-color: #e0e0e0;
+  color: #555;
+}
+
+.wonders-empty {
+  padding: 16px 8px;
+  color: #888;
+  font-size: 14px;
+  font-style: italic;
 }

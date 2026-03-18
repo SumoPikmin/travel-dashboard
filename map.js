@@ -24,6 +24,40 @@
     f.properties = f.properties || {};
     f.properties.displayName = name;
     nameIndex[name.toLowerCase()] = f;
+    window.nameIndex = nameIndex;
+    // Small countries not visible on map — add to nameIndex manually
+    const smallCountries = {
+      'singapore': 702,
+      'liechtenstein': 438,
+      'monaco': 492,
+      'san marino': 674,
+      'maldives': 462,
+      'malta': 470,
+      'vatican city': 336,
+      'andorra': 20,
+      'nauru': 520,
+      'tuvalu': 798,
+      'palau': 585,
+      'marshall islands': 584,
+      'kiribati': 296,
+      'micronesia': 583,
+      'saint kitts and nevis': 659,
+      'dominica': 212,
+      'grenada': 308,
+      'saint lucia': 662,
+      'saint vincent and the grenadines': 670,
+      'antigua and barbuda': 28,
+      'barbados': 52,
+      'bahrain': 48,
+    };
+
+    Object.entries(smallCountries).forEach(([name, id]) => {
+      if (!nameIndex[name]) {
+        nameIndex[name] = { id, properties: { displayName: name.charAt(0).toUpperCase() + name.slice(1) } };
+      }
+    });
+
+    window.nameIndex = nameIndex; // make sure this line comes AFTER the block above
   });
 
   // Retrieve saved states or initialize empty
@@ -51,6 +85,7 @@
     .scaleExtent([1, 8])
     .on('zoom', ({transform}) => g.attr('transform', transform));
   svg.call(zoom);
+  svg.on('dblclick.zoom', null);
 
   // Define colors for states
   const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
@@ -79,18 +114,38 @@
   const tooltip = d3.select('#tooltip');
 
   function showTooltip(event, d) {
-    const countryName = d.properties.displayName;
-    const code = nameToCode[countryName];
-    let flagHtml = '';
-    if (code) {
-      flagHtml = `<img class="flag-icon" src="https://flagcdn.com/w40/${code}.png" alt="${countryName} flag" /> `;
-    }
-    tooltip.style('display', 'block').html(
-      `<div class="country-name">${flagHtml}${countryName}</div>
-       <div style="font-size:13px;margin-top:4px">Status: <strong>${window.states[d.id] || 'neutral'}</strong></div>`
-    );
-    moveTooltip(event);
+  const countryName = d.properties.displayName;
+  const code = nameToCode[countryName];
+  let flagHtml = '';
+  if (code) {
+    flagHtml = `<img class="flag-icon" src="https://flagcdn.com/w40/${code}.png" alt="${countryName} flag" /> `;
   }
+
+  // Find wonders in this country
+  let wondersHtml = '';
+  if (window.wonderStates !== undefined && window.WONDERS_ALL) {
+    const matches = window.WONDERS_ALL.filter(w =>
+      w.land.split(',').some(l => l.trim() === countryName || l.trim().includes(countryName))
+    );
+    if (matches.length > 0) {
+      wondersHtml = `<div style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.3);padding-top:5px;font-size:12px;">
+        <div style="opacity:0.7;margin-bottom:3px;">Wonders</div>
+        ${matches.map(w => {
+          const s = (window.wonderStates && window.wonderStates[w.name]) || 'neutral';
+          const icon = s === 'been' ? '✓' : s === 'want' ? '★' : '·';
+          return `<div>${icon} ${w.name}</div>`;
+        }).join('')}
+      </div>`;
+    }
+  }
+
+  tooltip.style('display', 'block').html(
+    `<div class="country-name">${flagHtml}${countryName}</div>
+     <div style="font-size:13px;margin-top:4px">Status: <strong>${window.states[d.id] || 'neutral'}</strong></div>
+     ${wondersHtml}`
+  );
+  moveTooltip(event);
+}
 
   function moveTooltip(event) {
     const [x, y] = d3.pointer(event);
@@ -186,8 +241,11 @@
   });
 
   document.getElementById('exportBtn').addEventListener('click', () => {
-    const dataStr = JSON.stringify(window.states);
-    const blob = new Blob([dataStr], {type: 'application/json'});
+    const data = {
+      states: window.states,
+      wonderStates: window.wonderStates || {}
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -196,36 +254,50 @@
     URL.revokeObjectURL(url);
   });
 
-  const fileInput = document.getElementById('fileInput');
-  document.getElementById('importBtn').addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      try {
-        const importedStates = JSON.parse(e.target.result);
-        Object.keys(importedStates).forEach(id => {
-          if (countries.some(c => c.id === Number(id))) {
-            const val = importedStates[id];
-            if (val === 'been' || val === 'want' || val === 'neutral') {
-              if (val === 'neutral') delete window.states[id];
-              else window.states[id] = val;
-            }
-          }
-        });
-        saveStates();
-        g.selectAll('path.country')
-          .attr('fill', d => COLORS[window.states[d.id] || 'neutral']);
-        updateStats(window.states);
-        alert('Import successful.');
-      } catch {
-        alert('Failed to import data. Please ensure the file format is correct.');
-      }
-      fileInput.value = '';
-    };
-    reader.readAsText(file);
-  });
+
+const fileInput = document.getElementById('fileInput');
+document.getElementById('importBtn').addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+
+      // Support old format (plain states) and new format (with wonderStates)
+      const importedStates  = imported.states || imported;
+      const importedWonders = imported.wonderStates || {};
+
+      // Import country states
+      Object.keys(importedStates).forEach(id => {
+        if (countries.some(c => c.id === Number(id))) {
+          const val = importedStates[id];
+          if (val === 'been' || val === 'want') window.states[id] = val;
+          else delete window.states[id];
+        }
+      });
+
+      // Import wonder states
+      window.wonderStates = {};
+      Object.keys(importedWonders).forEach(name => {
+        const val = importedWonders[name];
+        if (val === 'been' || val === 'want') window.wonderStates[name] = val;
+      });
+      localStorage.setItem('wonders_states_v1', JSON.stringify(window.wonderStates));
+
+      saveStates();
+      g.selectAll('path.country')
+        .attr('fill', d => COLORS[window.states[d.id] || 'neutral']);
+      updateStats(window.states);
+      alert('Import successful.');
+    } catch {
+      alert('Failed to import data. Please ensure the file format is correct.');
+    }
+    fileInput.value = '';
+  };
+  reader.readAsText(file);
+});
 
   // Initial stats update on load
   updateStats(window.states);
