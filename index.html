@@ -6,6 +6,9 @@
   <title>Travel Dashboard</title>
   <link rel="icon" type="image/png" href="data/favicon.png" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="triplog.css" />
+  <link rel="stylesheet" href="triplist.css" />
+  <link rel="stylesheet" href="tripstats.css" />
 </head>
 
 <body>
@@ -16,6 +19,7 @@
         <button id="homeBtn"    class="nav-btn active">🏠 Home</button>
         <button id="statsBtn"   class="nav-btn">🌍 Countries</button>
         <button id="wondersBtn" class="nav-btn">🏛️ Wonders</button>
+        <button id="tripLogBtn" class="nav-btn">✈️ Trip Log</button>
       </div>
     </div>
 
@@ -42,8 +46,21 @@
           <div class="item"><div class="swatch" style="background: #8ecae6"></div> Been</div>
           <div class="item"><div class="swatch" style="background: #ffd166"></div> Want to go</div>
         </div>
-
-        <div class="note">Progress is saved automatically in your browser.</div>
+        <hr />
+        
+        <h2>Trip Logger</h2>
+        <div style="padding: 0 0 12px;">
+        <button id="homeNewTripBtn" style="
+          display: flex; align-items: center; gap: 6px;
+          padding: 7px 14px; border-radius: 8px; border: none;
+          background: #8ecae6; color: white; font-size: 14px;
+          font-weight: 600; cursor: pointer; width: 100%;
+          justify-content: center;
+        ">Add New Trip ✈️</button>
+      </div>
+      <hr />
+      <strong>Progress is saved automatically in your browser</strong><br>
+      Use the buttons below to save progress accross devices.
 
         <div class="controls">
           <button id="resetBtn">Reset</button>
@@ -51,9 +68,9 @@
           <button id="exportBtn">Save Progress</button>
           <input id="fileInput" type="file" accept="application/json" style="display:none" />
         </div>
-
-        <hr />
-        <strong>Quick actions</strong>
+    </div>
+    <hr />
+      <strong>Help</strong>
         <ul>
           <li>Hover over countries to see their name.</li>
           <li>Click on countries to change their status. (
@@ -61,12 +78,12 @@
             <span style="color: #8ecae6;">Been</span> &rarr;
             <span style="color: #ffd166;">Want</span> &rarr;
             <span style="color: black;">Neutral</span>)</li>
-        </ul>
-      </div>
+        </ul>  
+      
     </div>
 
     <!-- Stats content -->
-    <div id="statsContent" style="padding: 0 10px;">
+    <div id="statsContent" style="padding: 0 10px; display:none;">
       <h2>Statistics</h2>
       <p id="statsSummary">Loading stats...</p>
 
@@ -80,6 +97,8 @@
           <button class="cl-filter-btn active" data-filter="all">All</button>
           <button class="cl-filter-btn" data-filter="been">Been</button>
           <button class="cl-filter-btn" data-filter="want">Want</button>
+          <button class="cl-filter-btn" data-filter="next">🎯 Want (Next Up)</button>
+          <button class="cl-filter-btn" data-filter="longterm">🗓️ Want (Long Term)</button>
           <button class="cl-filter-btn" data-filter="neutral">Neutral</button>
         </div>
       </div>
@@ -88,7 +107,8 @@
     </div>
 
     <!-- Wonders content -->
-    <div id="wondersContent" style="padding: 0 10px;"></div>
+    <div id="wondersContent" style="padding: 0 10px; display:none;"></div>
+    <div id="tripLogContent" style="padding: 0 10px; display:none;"></div>
 
   </div> <!-- end .sidebar -->
 
@@ -102,28 +122,53 @@
     window.states = {};
   </script>
 
+  <script src="migration.js"></script>
+  <script src="trips.js"></script>      
   <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
   <script src="map.js"></script>
   <script src="stats.js"></script>
   <script src="wonders.js"></script>
+  <script src="triplog.js"></script>
+  <script src="triplist.js"></script>
+  <script src="tripstats.js"></script>
+  <script src="compat.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const homeBtn     = document.getElementById('homeBtn');
-      const statsBtn    = document.getElementById('statsBtn');
-      const wondersBtn  = document.getElementById('wondersBtn');
+      const homeBtn        = document.getElementById('homeBtn');
+      const statsBtn       = document.getElementById('statsBtn');
+      const wondersBtn     = document.getElementById('wondersBtn');
       const homeContent    = document.getElementById('homeContent');
       const statsContent   = document.getElementById('statsContent');
       const wondersContent = document.getElementById('wondersContent');
+      const tripLogBtn     = document.getElementById('tripLogBtn');
+      const tripLogContent = document.getElementById('tripLogContent');
+      const homeNewTripBtn = document.getElementById('homeNewTripBtn');
+      if (homeNewTripBtn) {
+        homeNewTripBtn.addEventListener('click', () => {
+          showTab('tripLogContent');
+          // Give initTripLog a tick to build the shell before opening the form
+          setTimeout(() => {
+            if (window.openTripForm) window.openTripForm();
+          }, 0);
+        });
+}
+
+      let statsInitialized = false;
 
       function showTab(tabId) {
+        // Hide all content panels
         homeContent.style.display    = 'none';
         statsContent.style.display   = 'none';
         wondersContent.style.display = 'none';
+        if (tripLogContent) tripLogContent.style.display = 'none';
+
+        // Remove active from all nav buttons
         homeBtn.classList.remove('active');
         statsBtn.classList.remove('active');
         wondersBtn.classList.remove('active');
+        if (tripLogBtn) tripLogBtn.classList.remove('active');
 
         if (tabId === 'homeContent') {
           homeContent.style.display = 'block';
@@ -131,29 +176,42 @@
         } else if (tabId === 'statsContent') {
           statsContent.style.display = 'block';
           statsBtn.classList.add('active');
-          if (window.updateStats) setTimeout(window.updateStats, 0);
+          if (!statsInitialized) {
+            if (window.updateStats) setTimeout(window.updateStats, 0);
+            statsInitialized = true;
+          }
         } else if (tabId === 'wondersContent') {
           wondersContent.style.display = 'block';
           wondersBtn.classList.add('active');
           if (window.initWonders) window.initWonders();
+        } else if (tabId === 'tripLogContent') {
+          if (tripLogContent) tripLogContent.style.display = 'block';
+          if (tripLogBtn) tripLogBtn.classList.add('active');
+          if (window.initTripLog) window.initTripLog();
         }
       }
 
       homeBtn.addEventListener('click',    () => showTab('homeContent'));
       statsBtn.addEventListener('click',   () => showTab('statsContent'));
       wondersBtn.addEventListener('click', () => showTab('wondersContent'));
+      tripLogBtn.addEventListener('click', () => showTab('tripLogContent'));
       showTab('homeContent');
 
-      // Stats filter buttons
+      // Stats filter buttons — set filter directly in stats.js and re-render
       document.addEventListener('click', e => {
         const btn = e.target.closest('#statsContent .cl-filter-btn');
         if (!btn) return;
-        document.querySelectorAll('#statsContent .cl-filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         const filter = btn.dataset.filter;
-        document.querySelectorAll('#countryListContainer .cl-item').forEach(item => {
-          item.classList.toggle('hidden', filter !== 'all' && !item.classList.contains('cl-' + filter));
+
+        // Update active button highlight
+        document.querySelectorAll('#statsContent .cl-filter-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.filter === filter);
         });
+
+        // Set filter in stats.js and re-render — no updateStats call so circles/summary stay intact
+        if (window.setCountryFilter) {
+          window.setCountryFilter(filter);
+        }
       });
     });
   </script>
