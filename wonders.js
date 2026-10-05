@@ -311,8 +311,8 @@ function renderWondersList() {
       </div>
       <button class="priority-badge-btn" title="Cycle priority">${priorityBadgeHtml(priority)}</button>
       <div class="wonders-item-actions">
-        <button class="wonders-status-btn ${status === 'been'    ? 'active-been'    : ''}" data-status="been"    title="Been">✓</button>
-        <button class="wonders-status-btn ${status === 'want'    ? 'active-want'    : ''}" data-status="want"    title="Want to go">★</button>
+        <button class="wonders-status-btn ${status === 'been'    ? 'active-been'    : ''}" data-status="been"    title="Been (click again to reset)">✓</button>
+        <button class="wonders-status-btn ${status === 'want'    ? 'active-want'    : ''}" data-status="want"    title="Want to go (click again to reset)">★</button>
         <button class="wonders-status-btn ${status === 'neutral' ? 'active-neutral' : ''}" data-status="neutral" title="Neutral">✕</button>
       </div>
     `;
@@ -324,7 +324,10 @@ function renderWondersList() {
 
     li.querySelectorAll('.wonders-status-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        setWonderState(wonder.name, btn.dataset.status);
+        // Clicking the already-active ✓ or ★ again resets the wonder to neutral
+        const clicked = btn.dataset.status;
+        const next    = clicked !== 'neutral' && clicked === getWonderState(wonder.name) ? 'neutral' : clicked;
+        setWonderState(wonder.name, next);
         updateWonderCircles();
         renderWondersList();
       });
