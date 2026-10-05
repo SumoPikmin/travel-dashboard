@@ -3,83 +3,101 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#12324a" />
+  <meta name="description" content="Track countries, wonders, trips and plans." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Travels" />
   <title>Travel Dashboard</title>
-  <link rel="icon" type="image/png" href="data/favicon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" href="icons/favicon-64.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="triplog.css" />
   <link rel="stylesheet" href="triplist.css" />
   <link rel="stylesheet" href="tripstats.css" />
+  <link rel="stylesheet" href="planner.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="theme.css" />
 </head>
 
 <body>
   <div class="sidebar">
     <div class="sidebar-nav top-bar">
       <h1 class="sidebar-title">Travel Dashboard</h1>
+      <p class="sidebar-tagline">Your world, one stamp at a time</p>
       <div class="nav-buttons">
-        <button id="homeBtn"    class="nav-btn active">🏠 Home</button>
-        <button id="statsBtn"   class="nav-btn">🌍 Countries</button>
-        <button id="wondersBtn" class="nav-btn">🏛️ Wonders</button>
-        <button id="tripLogBtn" class="nav-btn">✈️ Trip Log</button>
+        <button id="homeBtn"    class="nav-btn active"><span class="nav-icon">🏠</span>Home</button>
+        <button id="statsBtn"   class="nav-btn"><span class="nav-icon">🌍</span>Countries</button>
+        <button id="wondersBtn" class="nav-btn"><span class="nav-icon">🏛️</span>Wonders</button>
+        <button id="tripLogBtn" class="nav-btn"><span class="nav-icon">✈️</span>Trip Log</button>
+        <button id="plannerBtn" class="nav-btn"><span class="nav-icon">🗺️</span>Planner</button>
       </div>
     </div>
 
     <!-- Home content -->
     <div id="homeContent">
-      <hr />
       <div id="mapView">
-        <h2>Travel Map</h2>
-        <p>Mark countries as <strong>neutral</strong>, <strong>been</strong> or <strong>want to go</strong>. Click countries on the map to cycle the status or use the search box below.</p>
+        <section class="card">
+          <span class="card-eyebrow">Explore</span>
+          <h2>Travel Map</h2>
+          <p>Mark countries as <strong>been</strong> or <strong>want to go</strong>. Click a country on the map, or search for it below.</p>
 
-        <div class="search">
-          <input id="searchInput" type="text" placeholder="Search country (e.g. Spain)" autocomplete="off" />
-          <ul id="suggestions"></ul>
-          <select id="statusSelect">
-            <option value="neutral">Neutral</option>
-            <option value="been">Been</option>
-            <option value="want">Want to go</option>
-          </select>
-          <button id="applyBtn">Enter</button>
+          <div class="search">
+            <input id="searchInput" type="text" placeholder="Search a country, e.g. Spain" autocomplete="off" />
+            <ul id="suggestions"></ul>
+            <select id="statusSelect">
+              <option value="neutral">Neutral</option>
+              <option value="been">Been</option>
+              <option value="want">Want to go</option>
+            </select>
+            <button id="applyBtn">Apply</button>
+          </div>
+
+          <div class="legend">
+            <div class="item"><div class="swatch swatch-neutral"></div> Neutral</div>
+            <div class="item"><div class="swatch swatch-been"></div> Been</div>
+            <div class="item"><div class="swatch swatch-want"></div> Want to go</div>
+          </div>
+        </section>
+
+        <div class="quick-actions">
+          <button id="homeNewTripBtn" class="action-tile">
+            <span class="tile-icon">✈️</span>
+            Log a trip
+            <small>Record where you've been</small>
+          </button>
+          <button id="homeNewPlanBtn" class="action-tile">
+            <span class="tile-icon">🗺️</span>
+            Plan a trip
+            <small>Sketch your next adventure</small>
+          </button>
         </div>
 
-        <div class="legend">
-          <div class="item"><div class="swatch" style="background: #ffffff"></div> Neutral</div>
-          <div class="item"><div class="swatch" style="background: #8ecae6"></div> Been</div>
-          <div class="item"><div class="swatch" style="background: #ffd166"></div> Want to go</div>
-        </div>
-        <hr />
-        
-        <h2>Trip Logger</h2>
-        <div style="padding: 0 0 12px;">
-        <button id="homeNewTripBtn" style="
-          display: flex; align-items: center; gap: 6px;
-          padding: 7px 14px; border-radius: 8px; border: none;
-          background: #8ecae6; color: white; font-size: 14px;
-          font-weight: 600; cursor: pointer; width: 100%;
-          justify-content: center;
-        ">Add New Trip ✈️</button>
+        <section class="card">
+          <span class="card-eyebrow">Your data</span>
+          <h2>Save &amp; sync</h2>
+          <p>Progress is saved automatically in this browser. Export a file to move it to another device.</p>
+          <div class="controls">
+            <button id="exportBtn">⬇ Save Progress</button>
+            <button id="importBtn">⬆ Load Progress</button>
+            <button id="resetBtn">Reset</button>
+            <input id="fileInput" type="file" accept="application/json" style="display:none" />
+          </div>
+        </section>
+
+        <section class="card card-muted">
+          <strong>Tips</strong>
+          <ul>
+            <li>Hover over a country to see its name, flag and wonders.</li>
+            <li>Click a country to cycle its status: Neutral → Been → Want → Neutral.</li>
+            <li>Scroll to zoom the map, drag to pan.</li>
+          </ul>
+        </section>
       </div>
-      <hr />
-      <strong>Progress is saved automatically in your browser</strong><br>
-      Use the buttons below to save progress accross devices.
-
-        <div class="controls">
-          <button id="resetBtn">Reset</button>
-          <button id="importBtn">Load Progress</button>
-          <button id="exportBtn">Save Progress</button>
-          <input id="fileInput" type="file" accept="application/json" style="display:none" />
-        </div>
-    </div>
-    <hr />
-      <strong>Help</strong>
-        <ul>
-          <li>Hover over countries to see their name.</li>
-          <li>Click on countries to change their status. (
-            <span style="color: black;">Neutral</span> &rarr;
-            <span style="color: #8ecae6;">Been</span> &rarr;
-            <span style="color: #ffd166;">Want</span> &rarr;
-            <span style="color: black;">Neutral</span>)</li>
-        </ul>  
-      
     </div>
 
     <!-- Stats content -->
@@ -109,13 +127,14 @@
     <!-- Wonders content -->
     <div id="wondersContent" style="padding: 0 10px; display:none;"></div>
     <div id="tripLogContent" style="padding: 0 10px; display:none;"></div>
+    <div id="plannerContent" style="padding: 0 10px; display:none;"></div>
 
   </div> <!-- end .sidebar -->
 
   <div class="map-wrap">
     <div id="tooltip" class="tooltip"></div>
     <svg id="map"></svg>
-    <div class="footer">Tip: use zoom (mouse wheel) and drag to pan</div>
+    <div class="footer">Scroll or pinch to zoom · drag to pan</div>
   </div>
 
   <script>
@@ -123,6 +142,7 @@
   </script>
 
   <script src="migration.js"></script>
+  <script src="planner.js"></script>
   <script src="trips.js"></script>      
   <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
@@ -132,7 +152,19 @@
   <script src="triplog.js"></script>
   <script src="triplist.js"></script>
   <script src="tripstats.js"></script>
+  <script src="planner-ui.js"></script>
+  <script src="planner-form.js"></script>
   <script src="compat.js"></script>
+
+  <script>
+    // Offline support + "Add to Home Screen" (see sw.js)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err =>
+          console.warn('[sw] Registration failed:', err));
+      });
+    }
+  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -144,16 +176,28 @@
       const wondersContent = document.getElementById('wondersContent');
       const tripLogBtn     = document.getElementById('tripLogBtn');
       const tripLogContent = document.getElementById('tripLogContent');
+      const plannerBtn     = document.getElementById('plannerBtn');
+      const plannerContent = document.getElementById('plannerContent');
       const homeNewTripBtn = document.getElementById('homeNewTripBtn');
+      const homeNewPlanBtn = document.getElementById('homeNewPlanBtn');
+
       if (homeNewTripBtn) {
         homeNewTripBtn.addEventListener('click', () => {
           showTab('tripLogContent');
-          // Give initTripLog a tick to build the shell before opening the form
           setTimeout(() => {
             if (window.openTripForm) window.openTripForm();
           }, 0);
         });
-}
+      }
+
+      if (homeNewPlanBtn) {
+        homeNewPlanBtn.addEventListener('click', () => {
+          showTab('plannerContent');
+          setTimeout(() => {
+            if (window.openPlanForm) window.openPlanForm();
+          }, 0);
+        });
+      }
 
       let statsInitialized = false;
 
@@ -162,13 +206,15 @@
         homeContent.style.display    = 'none';
         statsContent.style.display   = 'none';
         wondersContent.style.display = 'none';
-        if (tripLogContent) tripLogContent.style.display = 'none';
+        if (tripLogContent)  tripLogContent.style.display  = 'none';
+        if (plannerContent)  plannerContent.style.display  = 'none';
 
         // Remove active from all nav buttons
         homeBtn.classList.remove('active');
         statsBtn.classList.remove('active');
         wondersBtn.classList.remove('active');
-        if (tripLogBtn) tripLogBtn.classList.remove('active');
+        if (tripLogBtn)  tripLogBtn.classList.remove('active');
+        if (plannerBtn)  plannerBtn.classList.remove('active');
 
         if (tabId === 'homeContent') {
           homeContent.style.display = 'block';
@@ -188,6 +234,10 @@
           if (tripLogContent) tripLogContent.style.display = 'block';
           if (tripLogBtn) tripLogBtn.classList.add('active');
           if (window.initTripLog) window.initTripLog();
+        } else if (tabId === 'plannerContent') {
+          if (plannerContent) plannerContent.style.display = 'block';
+          if (plannerBtn) plannerBtn.classList.add('active');
+          if (window.initPlanner) window.initPlanner();
         }
       }
 
@@ -195,6 +245,7 @@
       statsBtn.addEventListener('click',   () => showTab('statsContent'));
       wondersBtn.addEventListener('click', () => showTab('wondersContent'));
       tripLogBtn.addEventListener('click', () => showTab('tripLogContent'));
+      if (plannerBtn) plannerBtn.addEventListener('click', () => showTab('plannerContent'));
       showTab('homeContent');
 
       // Stats filter buttons — set filter directly in stats.js and re-render

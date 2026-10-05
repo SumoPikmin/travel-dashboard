@@ -1,0 +1,725 @@
+/* ==========================================================================
+   TRIP PLANNER — CSS
+   All classes use the pp- prefix to avoid collisions with triplog/triplist.
+   Depends on CSS variables defined in style.css (:root).
+   ========================================================================== */
+
+/* ── Planner accent colour (teal, distinct from triplog blue) ────────────── */
+:root {
+  --pp-accent: #a8dadc;
+  --pp-accent-dark: #1a6a8a;
+}
+
+/* ── Tab header ──────────────────────────────────────────────────────────── */
+
+.pp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 16px;
+  padding: 0 10px;
+}
+
+.pp-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pp-new-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
+  border-radius: var(--radius-lg);
+  border: none;
+  background: var(--pp-accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.pp-new-btn:hover { opacity: 0.85; background: var(--pp-accent); }
+
+/* ── Filter / sort bar ───────────────────────────────────────────────────── */
+
+.pp-filter-bar {
+  padding: 0 10px 12px;
+}
+
+.pp-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.pp-filter-select {
+  font-size: 12px;
+  padding: 5px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  flex: 1 1 100px;
+  min-width: 90px;
+  max-width: 160px;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23aaa'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 22px;
+}
+
+.pp-filter-select:focus {
+  outline: none;
+  border-color: var(--pp-accent);
+}
+
+.pp-filter-summary {
+  font-size: 12px;
+  color: #999;
+  padding: 0 2px;
+}
+
+/* ── Empty state ────────────────────────────────────────────────────────── */
+
+.pp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #aaa;
+  gap: 6px;
+}
+
+.pp-empty-icon { font-size: 36px; }
+.pp-empty-text { font-size: 15px; font-weight: 600; color: #888; margin: 0; }
+.pp-empty-sub  { font-size: 13px; color: #aaa; margin: 0; }
+
+/* ── No-results row ──────────────────────────────────────────────────────── */
+
+.pp-no-results {
+  padding: 24px 0;
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  font-style: italic;
+  list-style: none;
+}
+
+/* ── Plan list ───────────────────────────────────────────────────────────── */
+
+.pp-list-wrap { padding: 0 10px; }
+
+.pp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Plan card ───────────────────────────────────────────────────────────── */
+
+.pp-card {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  background: white;
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+  list-style: none;
+  position: relative;
+}
+
+.pp-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+
+.pp-card.pp-expanded {
+  border-color: var(--pp-accent);
+  box-shadow: 0 2px 12px rgba(168,218,220,0.28);
+}
+
+.pp-card.pp-completed { opacity: 0.72; }
+
+.pp-card.pp-completed .pp-card-name {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+/* ── Status stripe on left edge ─────────────────────────────────────────── */
+
+.pp-status-stripe {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  background: var(--pp-accent);
+}
+
+.pp-card.pp-completed .pp-status-stripe { background: #b7e4b7; }
+
+/* ── Summary row ─────────────────────────────────────────────────────────── */
+
+.pp-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px 12px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s;
+}
+
+.pp-summary:hover { background: var(--color-bg-hover); }
+
+.pp-summary-main { flex: 1; min-width: 0; }
+
+.pp-summary-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.pp-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tier pill */
+.pp-tier-pill {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pp-tier-budget  { background: #e8f4fb; border: 1px solid #c2e0f4; color: #2a6a8a; }
+.pp-tier-mid     { background: #fff3cd; border: 1px solid #ffd166; color: #7a5c00; }
+.pp-tier-luxury  { background: #f5e6ff; border: 1px solid #cc99ff; color: #5a2d82; }
+
+/* Status pill */
+.pp-status-pill {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pp-status-planned   { background: #e8f4fb; border: 1px solid var(--pp-accent); color: var(--pp-accent-dark); }
+.pp-status-completed { background: #e6f9f0; border: 1px solid #b7e4b7;          color: #2a7a3a; }
+
+/* Meta row */
+.pp-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.pp-card-nights { color: #888; }
+.pp-card-budget { color: #2a9d8f; font-weight: 600; }
+
+/* Stop flags row */
+.pp-card-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.pp-flag {
+  width: 20px;
+  height: auto;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.08);
+  vertical-align: middle;
+}
+
+/* Chevron */
+.pp-summary-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
+}
+
+.pp-chevron {
+  font-size: 12px;
+  color: #aaa;
+  transition: transform 0.2s;
+}
+
+/* ── Detail panel ────────────────────────────────────────────────────────── */
+
+.pp-detail-wrap {
+  border-top: 1px solid var(--color-border-light);
+  background: #fafafa;
+}
+
+.pp-detail-panel {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pp-detail-section { display: flex; flex-direction: column; gap: 8px; }
+
+.pp-detail-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #aaa;
+}
+
+/* Stop rows */
+.pp-stop-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.pp-stop-row:last-child { border-bottom: none; }
+
+.pp-stop-flag-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  font-weight: 500;
+}
+
+.pp-stop-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.pp-stop-nights {
+  font-size: 12px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.pp-stop-costs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.pp-stop-cost-item {
+  font-size: 11px;
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 2px 6px;
+  white-space: nowrap;
+  color: #666;
+}
+
+/* Budget summary grid */
+.pp-budget-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pp-budget-card {
+  flex: 1 1 72px;
+  min-width: 64px;
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.pp-budget-card-val {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.pp-budget-card-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #aaa;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.pp-budget-card.pp-budget-total {
+  border-color: var(--pp-accent);
+  background: #f0f9fa;
+}
+
+.pp-budget-card.pp-budget-total .pp-budget-card-val { color: var(--pp-accent-dark); }
+
+/* Wonders */
+.pp-wonder-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pp-wonder-tag {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: #f0faf0;
+  border: 1px solid #b7e4b7;
+  color: #2a7a3a;
+}
+
+/* Notes */
+.pp-notes {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.6;
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+/* ── Detail action buttons ────────────────────────────────────────────────── */
+
+.pp-detail-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px 14px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--color-border-light);
+  flex-wrap: wrap;
+}
+
+.pp-complete-btn,
+.pp-edit-btn,
+.pp-delete-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pp-complete-btn {
+  background: white;
+  border: 1px solid #b7e4b7;
+  color: #2a7a3a;
+  margin-right: auto; /* push edit/delete to the right */
+}
+
+.pp-complete-btn:hover { background: #e6f9f0; }
+
+.pp-complete-btn.pp-is-completed {
+  background: #e6f9f0;
+  border-color: #2a7a3a;
+}
+
+.pp-edit-btn {
+  background: white;
+  border: 1px solid var(--color-border);
+  color: #444;
+}
+
+.pp-edit-btn:hover {
+  background: var(--color-bg-hover);
+  border-color: #aaa;
+}
+
+.pp-delete-btn {
+  background: white;
+  border: 1px solid var(--color-border);
+  color: #e76f51;
+}
+
+.pp-delete-btn:hover {
+  background: #ffeaea;
+  border-color: #e76f51;
+}
+
+/* ── Home tab shortcut button ────────────────────────────────────────────── */
+
+#homeNewPlanBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--pp-accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+#homeNewPlanBtn:hover { opacity: 0.85; }
+
+/* ==========================================================================
+   PLAN FORM — WP-P3
+   Reuses tl- input/label/chip/error classes from triplog.css.
+   Only form-layout-specific elements use pp-form- prefix.
+   ========================================================================== */
+
+/* ── Form wrapper (injected above ppListWrap) ────────────────────────────── */
+
+.pp-form-wrap {
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  margin: 0 10px 16px;
+  overflow: hidden;
+}
+
+.pp-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--color-border-light);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pp-form-heading {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.pp-form-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #666;
+  line-height: 1;
+}
+
+.pp-form-close:hover { background: rgba(0,0,0,0.08); }
+
+/* ── Form body ───────────────────────────────────────────────────────────── */
+
+.pp-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Stop builder ────────────────────────────────────────────────────────── */
+
+.pp-stop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pp-stop-builder {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.pp-stop-builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  background: var(--color-border-light);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pp-stop-drag-handle {
+  cursor: grab;
+  color: #bbb;
+  font-size: 15px;
+  margin-right: 6px;
+}
+
+.pp-stop-country-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pp-stop-remove-btn {
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: #aaa;
+  padding: 0 4px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.pp-stop-remove-btn:hover { color: #e76f51; background: #ffeaea; }
+
+.pp-stop-fields {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pp-stop-row-inputs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pp-stop-row-inputs .tl-col {
+  min-width: 70px;
+}
+
+.pp-flight-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pp-stop-cost-total {
+  font-size: 12px;
+  color: #2a9d8f;
+  font-weight: 600;
+  text-align: right;
+  padding-top: 2px;
+}
+
+/* ── Wonder addon list ───────────────────────────────────────────────────── */
+
+.pp-wonder-addon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.pp-wonder-addon-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.12s;
+  border: 1px solid transparent;
+  font-size: 13px;
+}
+
+.pp-wonder-addon-item:hover { background: var(--color-bg-hover); }
+
+.pp-wonder-addon-item.pp-wonder-checked {
+  background: #f0faf0;
+  border-color: #b7e4b7;
+}
+
+.pp-wonder-addon-name { flex: 1; font-weight: 500; }
+.pp-wonder-addon-fee  { font-size: 11px; color: #888; white-space: nowrap; }
+
+/* ── Form actions ────────────────────────────────────────────────────────── */
+
+.pp-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.pp-cancel-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pp-cancel-btn:hover { background: var(--color-bg-hover); }
+
+.pp-save-btn {
+  padding: 8px 22px;
+  border-radius: var(--radius-lg);
+  border: none;
+  background: var(--pp-accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.pp-save-btn:hover { opacity: 0.85; }
+
+/* ── Budget live preview ─────────────────────────────────────────────────── */
+
+.pp-budget-preview {
+  background: #f0f9fa;
+  border: 1px solid var(--pp-accent);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pp-budget-preview-total {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--pp-accent-dark);
+}
+
+.pp-budget-preview-breakdown {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #666;
+  font-size: 12px;
+}
+
+.pp-budget-preview-item strong {
+  color: var(--color-text);
+}

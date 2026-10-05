@@ -77,6 +77,9 @@
       savedCompanions:  loadKey(KEYS.savedCompanions, []),
       savedTransport:   loadKey(KEYS.savedTransport,  []),
       savedTags:        loadKey(KEYS.savedTags,        []),
+
+      // New fields — Planner
+      tripPlans:        window.PlanStore ? window.PlanStore.getPlans() : [],
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -87,7 +90,7 @@
     a.click();
     URL.revokeObjectURL(url);
 
-    console.info('[compat] Exported', data.trips.length, 'trip(s).');
+    console.info('[compat] Exported', data.trips.length, 'trip(s),', data.tripPlans.length, 'plan(s).');
   }
 
   // ── Import handler ───────────────────────────────────────────────────────────
@@ -156,6 +159,31 @@
     const importedTransport  = sanitiseStringArray(raw.savedTransport);
     const importedTags       = sanitiseStringArray(raw.savedTags);
 
+    // ── 5b. Trip plans ─────────────────────────────────────────────────────────
+
+    const rawPlans    = Array.isArray(raw.tripPlans) ? raw.tripPlans : [];
+    const validPlans  = [];
+    let plansImported = 0;
+    let plansSkipped  = 0;
+
+    rawPlans.forEach((plan, index) => {
+      try {
+        const sanitised = window.PlanStore
+          ? window.PlanStore.sanitisePlan(plan)
+          : null;
+        if (sanitised && sanitised.name && sanitised.dateStart && sanitised.dateEnd) {
+          validPlans.push(sanitised);
+          plansImported++;
+        } else {
+          plansSkipped++;
+          console.warn('[compat] Skipping malformed plan at index', index, plan);
+        }
+      } catch (e) {
+        plansSkipped++;
+        console.warn('[compat] Error sanitising plan at index', index, e);
+      }
+    });
+
     // ── 6. Rebuild country states from trips (trip-source beats manual) ─────────
 
     // Start from imported manual states
@@ -191,9 +219,11 @@
     localStorage.setItem(KEYS.savedCompanions, JSON.stringify(importedCompanions));
     localStorage.setItem(KEYS.savedTransport,  JSON.stringify(importedTransport));
     localStorage.setItem(KEYS.savedTags,       JSON.stringify(importedTags));
+    localStorage.setItem(KEYS.tripPlans,       JSON.stringify(validPlans));
 
     // Sync in-memory caches
-    if (window.TripStore) window.TripStore.init();
+    if (window.TripStore)  window.TripStore.init();
+    if (window.PlanStore)  window.PlanStore.init();
 
     // ── 8. Refresh UI ──────────────────────────────────────────────────────────
 
@@ -233,12 +263,16 @@
       ? `\n${report.tripsSkipped} malformed trip(s) were skipped.`
       : '';
 
+    const plansMsg = plansImported > 0 || plansSkipped > 0
+      ? `\n${plansImported} plan(s) imported${plansSkipped > 0 ? `, ${plansSkipped} skipped` : ''}.`
+      : '';
+
     alert(
       `Import successful.\n` +
-      `${report.tripsImported} trip(s) imported.${skippedMsg}`
+      `${report.tripsImported} trip(s) imported.${skippedMsg}${plansMsg}`
     );
 
-    console.info('[compat] Import complete:', report);
+    console.info('[compat] Import complete:', report, { plansImported, plansSkipped });
   }
 
   // ── Validation ───────────────────────────────────────────────────────────────

@@ -23,11 +23,12 @@
     savedCompanions:  'travel_saved_companions_v1',
     savedTransport:   'travel_saved_transport_v1',
     savedTags:        'travel_saved_tags_v1',
+    tripPlans:        'travel_trip_plans_v1',      // WP-Planner
     migrationVersion: 'travel_migration_version',
   };
 
   // Bump this number whenever a new migration step is added.
-  const CURRENT_MIGRATION_VERSION = 1;
+  const CURRENT_MIGRATION_VERSION = 2;
 
   // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -173,6 +174,23 @@
     console.info('[migration] v1 complete.');
   }
 
+  // ── Migration v2 ─────────────────────────────────────────────────────────────
+
+  /**
+   * Migration v2 — Initialize trip_plans_v1 key for the Trip Planner feature.
+   * No data conversion needed — just creates the key if absent.
+   */
+  function migrateV2() {
+    console.info('[migration] Running v2 migration…');
+
+    if (load(KEYS.tripPlans) === null) {
+      save(KEYS.tripPlans, []);
+      console.info('[migration] v2: Initialized empty trip plans array.');
+    }
+
+    console.info('[migration] v2 complete.');
+  }
+
   // ── Runner ───────────────────────────────────────────────────────────────────
 
   /**
@@ -197,6 +215,7 @@
     //   if (appliedVersion < 2) migrateV2();
     //   if (appliedVersion < 3) migrateV3();
     if (appliedVersion < 1) migrateV1();
+    if (appliedVersion < 2) migrateV2();
 
     // Record the new version so this never runs again
     save(KEYS.migrationVersion, CURRENT_MIGRATION_VERSION);

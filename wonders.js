@@ -1,6 +1,7 @@
 const WONDERS_DATA = {
   natural: [
     { name: "Amazon Rainforest",                land: "Brazil, Peru, Colombia",                  wiki: "https://en.wikipedia.org/wiki/Amazon_rainforest" },
+    { name: "Antarctica",                     land: "Antarctica",                             wiki: "https://en.wikipedia.org/wiki/Antarctica" },
     { name: "Barringer Crater",                 land: "United States of America",                wiki: "https://en.wikipedia.org/wiki/Meteor_Crater" },
     { name: "Cerro de Potosí",                  land: "Bolivia",                                 wiki: "https://en.wikipedia.org/wiki/Cerro_Rico" },
     { name: "Chicxulub-Crater",                 land: "Mexico",                                  wiki: "https://en.wikipedia.org/wiki/Chicxulub_crater" },
@@ -14,11 +15,13 @@ const WONDERS_DATA = {
     { name: "Grand Mesa",                       land: "United States of America",                wiki: "https://en.wikipedia.org/wiki/Grand_Mesa" },
     { name: "Great Barrier Reef",               land: "Australia",                               wiki: "https://en.wikipedia.org/wiki/Great_Barrier_Reef" },
     { name: "Ha Long Bay",                      land: "Vietnam",                                 wiki: "https://en.wikipedia.org/wiki/Ha_Long_Bay" },
+    { name: "Iceland (Kirkjufell)",           land: "Iceland",                                wiki: "https://en.wikipedia.org/wiki/Kirkjufell" },
     { name: "Iguazu Falls",                     land: "Argentina, Brazil",                       wiki: "https://en.wikipedia.org/wiki/Iguazu_Falls" },
     { name: "Ik-Kil Cenote",                    land: "Mexico",                                  wiki: "https://en.wikipedia.org/wiki/Ik_Kil" },
     { name: "Jeju Island",                      land: "South Korea",                             wiki: "https://en.wikipedia.org/wiki/Jeju_Island" },
     { name: "Komodo Island",                    land: "Indonesia",                               wiki: "https://en.wikipedia.org/wiki/Komodo_(island)" },
     { name: "Krakatoa",                         land: "Indonesia",                               wiki: "https://en.wikipedia.org/wiki/Krakatoa" },
+    { name: "Kruger National Park",           land: "South Africa",                           wiki: "https://en.wikipedia.org/wiki/Kruger_National_Park" },
     { name: "Lake Victoria",                    land: "Kenya, Tanzania, Uganda",                 wiki: "https://en.wikipedia.org/wiki/Lake_Victoria" },
     { name: "Mato Tipila (Devils Tower)",       land: "United States of America",                wiki: "https://en.wikipedia.org/wiki/Devils_Tower" },
     { name: "Matterhorn",                       land: "Switzerland, Italy",                      wiki: "https://en.wikipedia.org/wiki/Matterhorn" },
@@ -52,6 +55,8 @@ const WONDERS_DATA = {
     { name: "Acropolis of Athens",              land: "Greece",                                  wiki: "https://en.wikipedia.org/wiki/Acropolis_of_Athens" },
     { name: "Alhambra",                         land: "Spain",                                   wiki: "https://en.wikipedia.org/wiki/Alhambra" },
     { name: "Angkor Wat",                       land: "Cambodia",                                wiki: "https://en.wikipedia.org/wiki/Angkor_Wat" },
+    { name: "Bali (Pura Lempuyang)",          land: "Indonesia",                              wiki: "https://en.wikipedia.org/wiki/Pura_Lempuyang_Luhur" },
+    { name: "Barcelona (Sagrada Família)",    land: "Spain",                                  wiki: "https://en.wikipedia.org/wiki/Sagrada_Fam%C3%ADlia" },
     { name: "Big Ben",                          land: "United Kingdom",                          wiki: "https://en.wikipedia.org/wiki/Big_Ben" },
     { name: "Borobudur",                        land: "Indonesia",                               wiki: "https://en.wikipedia.org/wiki/Borobudur" },
     { name: "Brandenburg Gate",                 land: "Germany",                                 wiki: "https://en.wikipedia.org/wiki/Brandenburg_Gate" },
@@ -61,16 +66,23 @@ const WONDERS_DATA = {
     { name: "Christ the Redeemer",              land: "Brazil",                                  wiki: "https://en.wikipedia.org/wiki/Christ_the_Redeemer_(statue)" },
     { name: "CN Tower",                         land: "Canada",                                  wiki: "https://en.wikipedia.org/wiki/CN_Tower" },
     { name: "Colosseum",                        land: "Italy",                                   wiki: "https://en.wikipedia.org/wiki/Colosseum" },
+    { name: "Dubai (Burj Khalifa)",           land: "United Arab Emirates",                   wiki: "https://en.wikipedia.org/wiki/Burj_Khalifa" },
+    { name: "Dubrovnik Old Town",             land: "Croatia",                                wiki: "https://en.wikipedia.org/wiki/Dubrovnik" },
+    { name: "Dutch Windmills (Kinderdijk)",   land: "Netherlands",                            wiki: "https://en.wikipedia.org/wiki/Kinderdijk" },
     { name: "Easter Island (Rapa Nui)",         land: "Chile",                                   wiki: "https://en.wikipedia.org/wiki/Easter_Island" },
     { name: "Eiffel Tower",                     land: "France",                                  wiki: "https://en.wikipedia.org/wiki/Eiffel_Tower" },
     { name: "Estádio do Maracanã",              land: "Brazil",                                  wiki: "https://en.wikipedia.org/wiki/Maracan%C3%A3_Stadium" },
+    { name: "Florence Cathedral",             land: "Italy",                                  wiki: "https://en.wikipedia.org/wiki/Florence_Cathedral" },
     { name: "Forbidden City",                   land: "China",                                   wiki: "https://en.wikipedia.org/wiki/Forbidden_City" },
+    { name: "Gardens by the Bay",             land: "Singapore",                              wiki: "https://en.wikipedia.org/wiki/Gardens_by_the_Bay" },
     { name: "Golden Gate Bridge",               land: "United States of America",                wiki: "https://en.wikipedia.org/wiki/Golden_Gate_Bridge" },
     { name: "Great Mosque of Djenné",           land: "Mali",                                    wiki: "https://en.wikipedia.org/wiki/Great_Mosque_of_Djenn%C3%A9" },
     { name: "Great Wall of China",              land: "China",                                   wiki: "https://en.wikipedia.org/wiki/Great_Wall_of_China" },
     { name: "Hagia Sophia",                     land: "Turkey",                                  wiki: "https://en.wikipedia.org/wiki/Hagia_Sophia" },
     { name: "Hermitage Museum",                 land: "Russia",                                  wiki: "https://en.wikipedia.org/wiki/Hermitage_Museum" },
     { name: "Himeji Castle",                    land: "Japan",                                   wiki: "https://en.wikipedia.org/wiki/Himeji_Castle" },
+    { name: "Hong Kong Skyline",              land: "China",                                  wiki: "https://en.wikipedia.org/wiki/Victoria_Harbour" },
+    { name: "Kyoto Temples",                  land: "Japan",                                  wiki: "https://en.wikipedia.org/wiki/Historic_Monuments_of_Ancient_Kyoto" },
     { name: "Leaning Tower of Pisa",            land: "Italy",                                   wiki: "https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa" },
     { name: "Machu Picchu",                     land: "Peru",                                    wiki: "https://en.wikipedia.org/wiki/Machu_Picchu" },
     { name: "Mont Saint-Michel",                land: "France",                                  wiki: "https://en.wikipedia.org/wiki/Mont_Saint-Michel" },
@@ -81,10 +93,13 @@ const WONDERS_DATA = {
     { name: "Oxford University",                land: "United Kingdom",                          wiki: "https://en.wikipedia.org/wiki/University_of_Oxford" },
     { name: "Petra",                            land: "Jordan",                                  wiki: "https://en.wikipedia.org/wiki/Petra" },
     { name: "Potala Palace",                    land: "China",                                   wiki: "https://en.wikipedia.org/wiki/Potala_Palace" },
+    { name: "Prague Old Town",                land: "Czech Republic",                         wiki: "https://en.wikipedia.org/wiki/Old_Town_(Prague)" },
     { name: "Pyramids of Giza",                 land: "Egypt",                                   wiki: "https://en.wikipedia.org/wiki/Giza_pyramid_complex" },
     { name: "Red Fort",                         land: "India",                                   wiki: "https://en.wikipedia.org/wiki/Red_Fort" },
     { name: "Saint Basil's Cathedral",          land: "Russia",                                  wiki: "https://en.wikipedia.org/wiki/Saint_Basil%27s_Cathedral" },
+    { name: "Santorini",                      land: "Greece",                                 wiki: "https://en.wikipedia.org/wiki/Santorini" },
     { name: "Sistine Chapel",                   land: "Vatican City",                            wiki: "https://en.wikipedia.org/wiki/Sistine_Chapel" },
+    { name: "St. Peter's Basilica",           land: "Vatican City",                           wiki: "https://en.wikipedia.org/wiki/St._Peter%27s_Basilica" },
     { name: "Statue of Liberty",                land: "United States of America",                wiki: "https://en.wikipedia.org/wiki/Statue_of_Liberty" },
     { name: "Stonehenge",                       land: "United Kingdom",                          wiki: "https://en.wikipedia.org/wiki/Stonehenge" },
     { name: "Sydney Opera House",               land: "Australia",                               wiki: "https://en.wikipedia.org/wiki/Sydney_Opera_House" },
@@ -96,7 +111,8 @@ const WONDERS_DATA = {
     { name: "The Pentagon",                     land: "United States of America",                wiki: "https://en.wikipedia.org/wiki/The_Pentagon" },
     { name: "Torre de Belém",                   land: "Portugal",                                wiki: "https://en.wikipedia.org/wiki/Bel%C3%A9m_Tower" },
     { name: "Uffizi Gallery",                   land: "Italy",                                   wiki: "https://en.wikipedia.org/wiki/Uffizi" },
-    { name: "Venetian Arsenal",                 land: "Italy",                                   wiki: "https://en.wikipedia.org/wiki/Venetian_Arsenal" }
+    { name: "Venetian Arsenal",                 land: "Italy",                                   wiki: "https://en.wikipedia.org/wiki/Venetian_Arsenal" },
+    { name: "Venice Canals",                  land: "Italy",                                  wiki: "https://en.wikipedia.org/wiki/Venice" }
   ]
 };
 
@@ -155,7 +171,7 @@ let currentWonderFilter  = 'all';
 function buildWonderCircleSVG(id, color) {
   return `
     <svg width="100" height="100" viewBox="0 0 100 100">
-      <circle stroke="#e0e0e0" stroke-width="9" fill="none" r="44" cx="50" cy="50"></circle>
+      <circle stroke="#ece6da" stroke-width="9" fill="none" r="44" cx="50" cy="50"></circle>
       <circle id="wonder-circle-${id}" stroke="${color}" stroke-width="9" fill="none"
         r="44" cx="50" cy="50" stroke-linecap="round" transform="rotate(-90, 50, 50)"></circle>
       <text id="wonder-text-${id}" x="50" y="55" text-anchor="middle" font-size="16" font-weight="bold" fill="${color}">0%</text>
@@ -177,8 +193,8 @@ function updateWonderCircle(id, visited, total, color) {
 function updateWonderCircles() {
   const naturalVisited  = WONDERS_DATA.natural.filter(w => getWonderState(w.name) === 'been').length;
   const culturalVisited = WONDERS_DATA.cultural.filter(w => getWonderState(w.name) === 'been').length;
-  updateWonderCircle('natural',  naturalVisited,  WONDERS_DATA.natural.length,  '#4caf50');
-  updateWonderCircle('cultural', culturalVisited, WONDERS_DATA.cultural.length, '#f4a261');
+  updateWonderCircle('natural',  naturalVisited,  WONDERS_DATA.natural.length,  '#3f8f5a');
+  updateWonderCircle('cultural', culturalVisited, WONDERS_DATA.cultural.length, '#c9772a');
   const nl = document.getElementById('wonder-label-natural');
   const cl = document.getElementById('wonder-label-cultural');
   if (nl) nl.textContent = `${naturalVisited} / ${WONDERS_DATA.natural.length}`;
@@ -196,12 +212,12 @@ window.initWonders = function() {
 
     <div class="stat-circles-row" style="margin: 16px 0;">
       <div class="stat-circle-item">
-        ${buildWonderCircleSVG('natural', '#4caf50')}
+        ${buildWonderCircleSVG('natural', '#3f8f5a')}
         <div class="stat-circle-label">🌿 Natural</div>
         <div class="stat-circle-sub" id="wonder-label-natural">0 / ${WONDERS_DATA.natural.length}</div>
       </div>
       <div class="stat-circle-item">
-        ${buildWonderCircleSVG('cultural', '#f4a261')}
+        ${buildWonderCircleSVG('cultural', '#c9772a')}
         <div class="stat-circle-label">🏛️ Cultural</div>
         <div class="stat-circle-sub" id="wonder-label-cultural">0 / ${WONDERS_DATA.cultural.length}</div>
       </div>

@@ -94,7 +94,7 @@ function getStateByName(name) {
 function buildCircleSVG(id, color) {
   return `
     <svg width="100" height="100" viewBox="0 0 100 100">
-      <circle stroke="#e0e0e0" stroke-width="9" fill="none" r="44" cx="50" cy="50"></circle>
+      <circle stroke="#ece6da" stroke-width="9" fill="none" r="44" cx="50" cy="50"></circle>
       <circle class="progress-bar" id="circle-${id}" stroke="${color}" stroke-width="9" fill="none"
         r="44" cx="50" cy="50" stroke-linecap="round" transform="rotate(-90, 50, 50)"></circle>
       <text id="text-${id}" x="50" y="55" text-anchor="middle" font-size="16" font-weight="bold" fill="${color}">0%</text>
@@ -114,12 +114,12 @@ function updateCircle(id, visited, total, color) {
 }
 
 const CONTINENT_COLORS = {
-  'Worldwide': '#4caf50',
-  'Europe':    '#8ecae6',
-  'Asia':      '#f4a261',
-  'Africa':    '#e76f51',
-  'Americas':  '#a8dadc',
-  'Oceania':   '#c77dff',
+  'Worldwide': '#1f5f7a',
+  'Europe':    '#3d7dca',
+  'Asia':      '#e07a3f',
+  'Africa':    '#c4553b',
+  'Americas':  '#2a9d8f',
+  'Oceania':   '#8e6cc8',
 };
 
 // ── Filter state — module-level, never reset by updateStats ──

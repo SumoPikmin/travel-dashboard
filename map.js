@@ -311,7 +311,7 @@
   svg.on('dblclick.zoom', null);
 
   // Define colors for states
-  const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
+  const COLORS = { neutral: '#fbf9f4', been: '#2a9d8f', want: '#e9a23b' };
 
   // Draw countries paths
   g.selectAll('path.country')
@@ -320,7 +320,7 @@
     .attr('class', 'country')
     .attr('d', path)
     .attr('fill', d => COLORS[window.getCountryStatus(d.id)])
-    .attr('stroke', '#bfbfbf')
+    .attr('stroke', '#c9bfae')
     .attr('stroke-width', 0.4)
     .style('cursor', 'pointer')
     .on('mouseover', (event, d) => showTooltip(event, d))

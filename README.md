@@ -9,7 +9,11 @@ A personal, browser-based travel tracking app built with vanilla JavaScript, D3.
 ```
 travel-dashboard/
 ├── index.html          # Main HTML file
-├── style.css           # All styles
+├── manifest.webmanifest # App manifest (installable on phones)
+├── sw.js               # Service worker (offline support)
+├── icons/              # App icons
+├── style.css           # Base styles
+├── theme.css           # "Atlas" visual theme (loaded last, overrides base styles)
 ├── map.js              # Interactive world map logic (D3.js)
 ├── stats.js            # Statistics tab logic
 ├── wonders.js          # Wonders of the World tab logic
@@ -45,7 +49,23 @@ travel-dashboard/
 
 ---
 
-## Getting Started
+## Live Site
+
+**https://sumopikmin.github.io/travel-dashboard/**
+
+Hosted on GitHub Pages from the `main` branch — every push to `main` updates the site within a minute or two.
+
+### Install on your phone
+- **iPhone (Safari):** Share → *Add to Home Screen*
+- **Android (Chrome):** ⋮ menu → *Install app* / *Add to Home screen*
+
+The app then opens full-screen and works offline (`sw.js` caches the app files).
+
+> Progress is stored per browser and per address. To move it between devices (or from localhost to the live site), use **Save Progress** on one and **Load Progress** on the other.
+
+---
+
+## Running Locally
 
 Because the app fetches `data/countries-110m.json` via the Fetch API, it must be served over HTTP — it will not work when opened directly as a `file://` URL due to browser CORS restrictions.
 
