@@ -98,6 +98,12 @@ npx serve .
 
 ---
 
+## Roadmap
+
+Planned features (LLM trip advisor, cloud sync, …) are tracked in [docs/roadmap.md](docs/roadmap.md).
+
+---
+
 ## Calendar Data — Monthly Update
 
 The festival & nature calendar (`calendar-data.js`) must be **refreshed at the start of every month**:
