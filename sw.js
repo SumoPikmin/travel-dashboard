@@ -9,7 +9,7 @@
  * Bump CACHE_VERSION when the list of app files changes.
  */
 
-const CACHE_VERSION = 'td-v3';
+const CACHE_VERSION = 'td-v8';
 const APP_CACHE     = `${CACHE_VERSION}-app`;
 const CDN_CACHE     = `${CACHE_VERSION}-cdn`;
 
@@ -17,9 +17,9 @@ const APP_FILES = [
   './',
   'index.html',
   'manifest.webmanifest',
-  'style.css', 'triplog.css', 'triplist.css', 'tripstats.css', 'planner.css', 'theme.css',
-  'migration.js', 'planner.js', 'trips.js', 'map.js', 'stats.js', 'wonders.js',
-  'triplog.js', 'triplist.js', 'tripstats.js', 'planner-ui.js', 'planner-form.js', 'compat.js', 'badges.js', 'stickers.js',
+  'style.css', 'triplog.css', 'triplist.css', 'tripstats.css', 'planner.css', 'dark.css', 'theme.css',
+  'migration.js', 'planner.js', 'trips.js', 'map.js', 'stats.js', 'wonders.js', 'wonders-map.js',
+  'triplog.js', 'triplist.js', 'tripstats.js', 'planner-ui.js', 'planner-form.js', 'compat.js', 'calendar-data.js', 'calendar.js', 'seasons-data.js', 'where-to-go.js', 'badges.js', 'stickers.js',
   'data/countries-110m.json',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon-64.png'
 ];

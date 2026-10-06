@@ -71,6 +71,7 @@
       wonderStates:     window.wonderStates     || {},
       priorities:       window.priorities       || {},
       wonderPriorities: window.wonderPriorities || {},
+      calendarStates:   window.calendarStates   || {},
 
       // New fields — WP7
       trips:            window.TripStore ? window.TripStore.getTrips() : [],
@@ -135,6 +136,7 @@
 
     const importedPriorities      = sanitiseStringMap(raw.priorities,       ['next', 'longterm']);
     const importedWonderPriorities = sanitiseStringMap(raw.wonderPriorities, ['next', 'longterm']);
+    const importedCalendar         = sanitiseStringMap(raw.calendarStates,   ['been', 'want']);
 
     // ── 4. Trips ───────────────────────────────────────────────────────────────
 
@@ -215,6 +217,9 @@
     window.wonderPriorities = importedWonderPriorities;
     localStorage.setItem(KEYS.wonderPriorities, JSON.stringify(importedWonderPriorities));
 
+    window.calendarStates = importedCalendar;
+    localStorage.setItem('calendar_states_v1', JSON.stringify(importedCalendar));
+
     localStorage.setItem(KEYS.trips,           JSON.stringify(validTrips));
     localStorage.setItem(KEYS.savedCompanions, JSON.stringify(importedCompanions));
     localStorage.setItem(KEYS.savedTransport,  JSON.stringify(importedTransport));
@@ -229,7 +234,7 @@
 
     // Redraw map colours
     if (window.d3) {
-      const COLORS = { neutral: '#ffffff', been: '#8ecae6', want: '#ffd166' };
+      const COLORS = { neutral: '#fbf9f4', been: '#2a9d8f', want: '#e9a23b' };   // keep in sync with map.js
       window.d3.selectAll('path.country')
         .attr('fill', d => COLORS[window.getCountryStatus(d.id)]);
     }
@@ -241,6 +246,7 @@
       delete wondersContent.dataset.built;
     }
     if (window.initWonders) window.initWonders();
+    if (window.refreshCalendar) window.refreshCalendar();
 
     // Rebuild trip log tab
     const tripLogContent = document.getElementById('tripLogContent');

@@ -10,14 +10,26 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Travels" />
   <title>Travel Dashboard</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" type="image/png" href="icons/favicon-64.png" />
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <script>
+    // Theme: 'light' | 'dark' | 'auto' (follows the system). Applied before
+    // first paint so dark mode doesn't flash white.
+    (function () {
+      var pref = 'auto';
+      try { pref = localStorage.getItem('theme_pref_v1') || 'auto'; } catch (e) {}
+      var dark = pref === 'dark' ||
+        (pref === 'auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    })();
+  </script>
+  <link rel="manifest" href="manifest.webmanifest?v=2" />
+  <link rel="icon" type="image/png" href="icons/favicon-64.png?v=2" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="triplog.css" />
   <link rel="stylesheet" href="triplist.css" />
   <link rel="stylesheet" href="tripstats.css" />
   <link rel="stylesheet" href="planner.css" />
+  <link rel="stylesheet" href="dark.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
@@ -28,17 +40,23 @@
   <div class="sidebar">
     <div class="sidebar-nav top-bar">
       <h1 class="sidebar-title">Travel Dashboard</h1>
+      <button id="themeToggle" class="theme-toggle" type="button" title="Switch theme"></button>
       <p class="sidebar-tagline">Your world, one stamp at a time</p>
       <div class="nav-buttons">
         <button id="homeBtn"       class="nav-btn active" data-group="home"><span class="nav-icon">🏠</span>Home</button>
         <button id="statsBtn"      class="nav-btn" data-group="countries"><span class="nav-icon">🌍</span>Countries</button>
-        <button id="wondersBtn"    class="nav-btn" data-group="wonders"><span class="nav-icon">🏛️</span>Wonders</button>
+        <button id="wondersBtn"    class="nav-btn" data-group="explore"><span class="nav-icon">🧭</span>Explore</button>
         <button id="tripsBtn"      class="nav-btn" data-group="trips"><span class="nav-icon">✈️</span>Trips</button>
         <button id="collectionBtn" class="nav-btn" data-group="collection"><span class="nav-icon">🔶</span>Collection</button>
       </div>
     </div>
 
     <!-- Sub-switches for grouped tabs -->
+    <div class="subnav" data-group="explore" role="tablist" aria-label="Explore" style="display:none;">
+      <button class="subnav-btn" data-tab="wondersContent">🏛️ Wonders</button>
+      <button class="subnav-btn" data-tab="calendarContent">🗓️ Calendar</button>
+      <button class="subnav-btn" data-tab="whereToGoContent">🧳 Where to go</button>
+    </div>
     <div class="subnav" data-group="trips" role="tablist" aria-label="Trips" style="display:none;">
       <button class="subnav-btn" data-tab="tripLogContent">✈️ Trip Log</button>
       <button class="subnav-btn" data-tab="plannerContent">🗺️ Planner</button>
@@ -136,6 +154,8 @@
 
     <!-- Wonders content -->
     <div id="wondersContent" style="padding: 0 10px; display:none;"></div>
+    <div id="calendarContent" style="padding: 0 10px; display:none;"></div>
+    <div id="whereToGoContent" style="padding: 0 10px; display:none;"></div>
     <div id="badgesContent" style="padding: 0 10px; display:none;"></div>
     <div id="stickersContent" style="padding: 0 10px; display:none;"></div>
     <div id="tripLogContent" style="padding: 0 10px; display:none;"></div>
@@ -145,6 +165,11 @@
 
   <div class="map-wrap">
     <div id="tooltip" class="tooltip"></div>
+    <!-- Stage: replaces the map on Collection pages -->
+    <div class="stage" id="stage">
+      <div class="stage-pane" id="stickerBoards" hidden></div>
+      <div class="stage-pane" id="badgeBoards" hidden></div>
+    </div>
     <svg id="map"></svg>
     <div class="footer">Scroll or pinch to zoom · drag to pan</div>
   </div>
@@ -161,12 +186,17 @@
   <script src="map.js"></script>
   <script src="stats.js"></script>
   <script src="wonders.js"></script>
+  <script src="wonders-map.js"></script>
   <script src="triplog.js"></script>
   <script src="triplist.js"></script>
   <script src="tripstats.js"></script>
   <script src="planner-ui.js"></script>
   <script src="planner-form.js"></script>
   <script src="compat.js"></script>
+  <script src="calendar-data.js"></script>
+  <script src="calendar.js"></script>
+  <script src="seasons-data.js"></script>
+  <script src="where-to-go.js"></script>
   <script src="badges.js"></script>
   <script src="stickers.js"></script>
 
@@ -188,15 +218,17 @@
         statsContent:    { group: 'countries',  init: () => {
           if (!statsInitialized && window.updateStats) { setTimeout(window.updateStats, 0); statsInitialized = true; }
         } },
-        wondersContent:  { group: 'wonders',    init: () => window.initWonders  && window.initWonders()  },
+        wondersContent:  { group: 'explore',    init: () => { window.initWonders && window.initWonders(); window.showWonderMap && window.showWonderMap(); } },
+        calendarContent: { group: 'explore',    init: () => window.initCalendar && window.initCalendar() },
+        whereToGoContent:{ group: 'explore',    init: () => window.initWhereToGo && window.initWhereToGo() },
         tripLogContent:  { group: 'trips',      init: () => window.initTripLog  && window.initTripLog()  },
         plannerContent:  { group: 'trips',      init: () => window.initPlanner  && window.initPlanner()  },
-        stickersContent: { group: 'collection', init: () => window.initStickers && window.initStickers(), wide: true },
-        badgesContent:   { group: 'collection', init: () => window.initBadges   && window.initBadges(),   wide: true }
+        stickersContent: { group: 'collection', init: () => window.initStickers && window.initStickers(), stage: 'stickerBoards' },
+        badgesContent:   { group: 'collection', init: () => window.initBadges   && window.initBadges(),   stage: 'badgeBoards' }
       };
 
       // Last-opened page per group, so Trips / Collection reopen where you left off
-      const lastInGroup = { home: 'homeContent', countries: 'statsContent', wonders: 'wondersContent',
+      const lastInGroup = { home: 'homeContent', countries: 'statsContent', explore: 'wondersContent',
                             trips: 'tripLogContent', collection: 'stickersContent' };
 
       let statsInitialized = false;
@@ -223,8 +255,14 @@
           });
         });
 
-        // Full-width pages hide the map
-        document.body.classList.toggle('wide-view', !!page.wide);
+        // The calendar draws pins on the map — remove them when leaving
+        if (tabId !== 'calendarContent' && window.leaveCalendar) window.leaveCalendar();
+        if (tabId !== 'wondersContent'  && window.leaveWonderMap) window.leaveWonderMap();
+        if (tabId !== 'whereToGoContent' && window.leaveWhereToGo) window.leaveWhereToGo();
+
+        // Collection pages show their board on the right instead of the map
+        document.body.classList.toggle('stage-view', !!page.stage);
+        document.querySelectorAll('.stage-pane').forEach(pane => { pane.hidden = pane.id !== page.stage; });
 
         page.init();
       }
@@ -257,6 +295,35 @@
       }
 
       showTab('homeContent');
+
+      // Theme toggle: Light → Dark → Auto
+      const THEME_KEY   = 'theme_pref_v1';
+      const THEME_ORDER = ['light', 'dark', 'auto'];
+      const THEME_LABEL = { light: '☀️ <span class="theme-label">Light</span>',
+                            dark:  '🌙 <span class="theme-label">Dark</span>',
+                            auto:  '🖥️ <span class="theme-label">Auto</span>' };
+      const systemDark  = window.matchMedia('(prefers-color-scheme: dark)');
+      const themeToggle = document.getElementById('themeToggle');
+
+      function getThemePref() {
+        try { return localStorage.getItem(THEME_KEY) || 'auto'; } catch { return 'auto'; }
+      }
+
+      function applyTheme(pref) {
+        const dark = pref === 'dark' || (pref === 'auto' && systemDark.matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        themeToggle.innerHTML = THEME_LABEL[pref];
+        themeToggle.title = `Theme: ${pref} — click to switch`;
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const next = THEME_ORDER[(THEME_ORDER.indexOf(getThemePref()) + 1) % THEME_ORDER.length];
+        try { localStorage.setItem(THEME_KEY, next); } catch {}
+        applyTheme(next);
+      });
+
+      systemDark.addEventListener('change', () => { if (getThemePref() === 'auto') applyTheme('auto'); });
+      applyTheme(getThemePref());
 
       // Stats filter buttons — set filter directly in stats.js and re-render
       document.addEventListener('click', e => {

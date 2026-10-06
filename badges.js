@@ -134,6 +134,12 @@
       value: c => ({ value: c.natural.filter(w => c.wonderBeen(w.name)).length }) },
     { cat: 'wonders', icon: '🏺', name: 'Culture Vulture',    desc: 'Visit 10 cultural sites', target: 10,
       value: c => ({ value: c.cultural.filter(w => c.wonderBeen(w.name)).length }) },
+    { cat: 'wonders', icon: '🍺', name: 'Festival Fever',     desc: 'Celebrate 3 festivals from the calendar', target: 3,
+      value: () => ({ value: (window.CALENDAR_EVENTS || [])
+        .filter(e => e.type === 'festival' && (window.calendarStates || {})[e.id] === 'been').length }) },
+    { cat: 'wonders', icon: '🌿', name: 'Nature Chaser',      desc: 'Witness 5 nature spectacles from the calendar', target: 5,
+      value: () => ({ value: (window.CALENDAR_EVENTS || [])
+        .filter(e => e.type === 'nature' && (window.calendarStates || {})[e.id] === 'been').length }) },
 
     // Trips (year in review)
     { cat: 'trips', icon: '📆', name: 'Globetrotter of the Year', desc: '5 new countries in one calendar year', target: 5,
@@ -187,8 +193,7 @@
     { cat: 'soon', icon: '🏞️', name: 'Park Ranger',        desc: 'Visit 10 national parks',                needs: 'a national parks list' },
     { cat: 'soon', icon: '⛰️', name: 'Peak Bagger',        desc: 'See the highest peak of every continent', needs: 'a Seven Summits list' },
     { cat: 'soon', icon: '✈️', name: 'Around the World',   desc: 'Travel 40,075 km in total',              needs: 'distance per trip' },
-    { cat: 'soon', icon: '🌙', name: 'To the Moon',        desc: 'Travel 384,400 km in total',             needs: 'distance per trip' },
-    { cat: 'soon', icon: '🍺', name: 'Festival Fever',     desc: 'Attend 3 festivals like Oktoberfest',    needs: 'the festival calendar' }
+    { cat: 'soon', icon: '🌙', name: 'To the Moon',        desc: 'Travel 384,400 km in total',             needs: 'distance per trip' }
   ];
 
   const SECTIONS = [
@@ -347,7 +352,6 @@
           </div>
         </div>
 
-        <div id="badgeBoards"></div>
       </div>`;
 
     container.querySelectorAll('.collection-sections .wonders-seg-btn').forEach(btn => {

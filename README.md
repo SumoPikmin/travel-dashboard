@@ -41,11 +41,21 @@ travel-dashboard/
 - Full alphabetical country list with collapsible letter sections
 - Filter countries by status: All, Been, Want, Neutral
 
-### 🏛️ Wonders — Wonders of the World Tab
-- Toggle between Natural Wonders and Cultural Sites
-- Mark each wonder as Been, Want to go, or Neutral
-- Filter by status
-- Progress saved automatically to localStorage separately from country data
+### 🧭 Explore
+- **Wonders** — 98 natural and cultural wonders (incl. all 50 Let's Wander World Explorer bottle destinations, filter 🍶 Bottle). Mark as Been / Want (click an active mark again to reset), set priorities. The map shows the wonders you haven't been to: a count badge per country when zoomed out, emoji pins at the real locations when zoomed in.
+- **Calendar** — 42 festivals and 31 nature spectacles by month, with confirmed upcoming dates. Countries with events are highlighted on the map with emoji pins. Data must be refreshed monthly — see below.
+- **Where to go** — pick a month and see which of your ★ want countries, wonders and events are in season; the month strip shows how many match each month.
+
+### ✈️ Trips
+- **Trip Log** and **Planner** for past and future trips.
+
+### 🔶 Collection
+- **Stickers** — honeycomb sticker book of all wonders, styled after the bottle.
+- **Badges** — 20 achievement medals computed from your countries, wonders, trips and calendar.
+
+### General
+- Light / dark / auto theme (toggle in the header)
+- Installable on phones (Add to Home Screen) and works offline
 
 ---
 
@@ -84,6 +94,19 @@ python -m http.server 8080
 ```bash
 npx serve .
 # Open http://localhost:3000
+```
+
+---
+
+## Calendar Data — Monthly Update
+
+The festival & nature calendar (`calendar-data.js`) must be **refreshed at the start of every month**:
+festival dates move each year and are often announced only a few months ahead.
+Follow [docs/calendar-maintenance.md](docs/calendar-maintenance.md) — in short:
+
+```bash
+node tools/calendar-check.js   # what needs updating + validation
+node tools/calendar-doc.js     # regenerate docs/calendar-research.md
 ```
 
 ---

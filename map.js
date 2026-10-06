@@ -310,6 +310,9 @@
   svg.call(zoom);
   svg.on('dblclick.zoom', null);
 
+  // Shared with overlays (e.g. calendar pins): they add their own 'zoom.<name>' listeners
+  window.TravelMap = { svg, g, projection, path, zoom, countries };
+
   // Define colors for states
   const COLORS = { neutral: '#fbf9f4', been: '#2a9d8f', want: '#e9a23b' };
 
@@ -368,11 +371,15 @@
       }
     }
 
+    // Calendar events for this country (only while the Calendar page is open)
+    const calendarHtml = window.calendarTooltipHtml ? window.calendarTooltipHtml(countryName) : '';
+
     tooltip.style('display', 'block').html(
       `<div class="country-name">${flagHtml}${countryName}</div>
        <div style="font-size:13px;margin-top:4px">Status: <strong>${window.getCountryStatus(d.id)}</strong>
        ${prioHtml}
-       ${wondersHtml}`
+       ${wondersHtml}
+       ${calendarHtml}`
     );
     moveTooltip(event);
   }
@@ -481,9 +488,11 @@
     window.wonderStates     = {};
     window.priorities       = {};
     window.wonderPriorities = {};
+    window.calendarStates   = {};
     localStorage.removeItem('wonders_states_v1');
     localStorage.removeItem('travel_priorities_v1');
     localStorage.removeItem('wonder_priorities_v1');
+    localStorage.removeItem('calendar_states_v1');
     g.selectAll('path.country').attr('fill', COLORS.neutral);
     saveStates();
     if (window.updateStats) window.updateStats();

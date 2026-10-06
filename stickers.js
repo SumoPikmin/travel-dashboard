@@ -1,7 +1,8 @@
 /**
  * stickers.js — Stickers tab
  *
- * Full-width honeycomb "sticker book" of all wonders, styled after the
+ * Honeycomb "sticker book" of all wonders, shown on the right-hand stage
+ * (in place of the map) while the controls live in the left panel; styled after the
  * Let's Wander World Explorer bottle: collected wonders in colour, the rest
  * as grey outlines. Clicking a sticker cycles
  *   not visited → been → want → not visited
@@ -24,10 +25,10 @@
   let filter  = 'all';      // all | been | want | neutral | bottle
   let built   = false;
 
-  function hexSize() {
-    const w = window.innerWidth;
-    const width = w < 600 ? 88 : w < 1100 ? 104 : 118;
-    return { w: width, h: Math.round(width * 1.1547), gap: w < 600 ? 6 : 8 };
+  // Sticker size follows the board width, not the window
+  function hexSize(boardWidth) {
+    const width = boardWidth < 420 ? 80 : boardWidth < 760 ? 96 : 108;
+    return { w: width, h: Math.round(width * 1.1547), gap: boardWidth < 420 ? 5 : 7 };
   }
 
   function matches(wonder) {
@@ -65,8 +66,8 @@
       return;
     }
 
-    const { w: W, h: H, gap } = hexSize();
     const width  = grid.clientWidth || 440;
+    const { w: W, h: H, gap } = hexSize(width);
     const stepX  = W + gap;
     const stepY  = Math.round(H * 0.75 + gap * 0.87);
     const cols   = Math.max(1, Math.floor((width - stepX / 2 + gap) / stepX));
@@ -163,7 +164,6 @@
           </div>
         </div>
 
-        <div id="stickerBoards"></div>
       </div>`;
 
     container.querySelectorAll('.collection-sections .wonders-seg-btn').forEach(btn => {

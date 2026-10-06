@@ -1,0 +1,122 @@
+/**
+ * seasons-data.js — best months to visit each country
+ *
+ * General travel-climate guidance: months with pleasant temperatures, the
+ * dry season, and no monsoon / hurricane / extreme-heat peak. Large
+ * countries with very different regions (USA, China, Brazil, Australia,
+ * India, Russia…) reflect their main tourist regions — always check the
+ * specific region before booking.
+ *
+ * Country names match stats.js / map.js. Used by where-to-go.js.
+ */
+
+window.COUNTRY_SEASONS = {
+  // ── Europe ───────────────────────────────────────────────────────────
+  'Albania': [5, 6, 9, 10],              'Andorra': [1, 2, 3, 6, 7, 8, 9],
+  'Austria': [5, 6, 7, 8, 9, 12],        'Belarus': [5, 6, 7, 8, 9],
+  'Belgium': [4, 5, 6, 7, 8, 9],         'Bosnia and Herzegovina': [5, 6, 9, 10],
+  'Bulgaria': [5, 6, 7, 8, 9],           'Croatia': [5, 6, 9, 10],
+  'Cyprus': [4, 5, 6, 9, 10, 11],        'Czech Republic': [4, 5, 6, 9, 10, 12],
+  'Denmark': [5, 6, 7, 8],               'Estonia': [5, 6, 7, 8],
+  'Finland': [6, 7, 8, 12, 1, 2, 3],     'France': [4, 5, 6, 9, 10],
+  'Germany': [5, 6, 7, 8, 9, 12],        'Greece': [4, 5, 6, 9, 10],
+  'Hungary': [4, 5, 6, 9, 10],           'Iceland': [6, 7, 8, 9],
+  'Ireland': [5, 6, 7, 8, 9],            'Italy': [4, 5, 6, 9, 10],
+  'Kosovo': [5, 6, 7, 8, 9],             'Latvia': [5, 6, 7, 8],
+  'Liechtenstein': [6, 7, 8, 9],         'Lithuania': [5, 6, 7, 8],
+  'Luxembourg': [5, 6, 7, 8, 9],         'Malta': [4, 5, 6, 9, 10],
+  'Moldova': [5, 6, 9],                  'Monaco': [4, 5, 6, 9, 10],
+  'Montenegro': [5, 6, 9],               'Netherlands': [4, 5, 6, 7, 8, 9],
+  'North Macedonia': [5, 6, 9],          'Norway': [6, 7, 8],
+  'Poland': [5, 6, 7, 8, 9],             'Portugal': [4, 5, 6, 9, 10],
+  'Romania': [5, 6, 9],                  'Russia': [5, 6, 7, 8, 9],
+  'San Marino': [5, 6, 9],               'Serbia': [5, 6, 9],
+  'Slovakia': [5, 6, 7, 8, 9],           'Slovenia': [5, 6, 7, 8, 9],
+  'Spain': [4, 5, 6, 9, 10],             'Sweden': [6, 7, 8],
+  'Switzerland': [6, 7, 8, 9, 1, 2],     'Ukraine': [5, 6, 7, 8, 9],
+  'United Kingdom': [5, 6, 7, 8, 9],     'Vatican City': [3, 4, 5, 10, 11],
+
+  // ── Asia ─────────────────────────────────────────────────────────────
+  'Afghanistan': [4, 5, 9, 10],          'Armenia': [5, 6, 9, 10],
+  'Azerbaijan': [4, 5, 6, 9, 10],        'Bahrain': [11, 12, 1, 2, 3],
+  'Bangladesh': [11, 12, 1, 2],          'Bhutan': [3, 4, 5, 10, 11],
+  'Brunei': [2, 3, 4, 5, 6, 7, 8],       'Cambodia': [11, 12, 1, 2, 3],
+  'China': [4, 5, 9, 10],                'Georgia': [5, 6, 9, 10],
+  'India': [10, 11, 12, 1, 2, 3],        'Indonesia': [5, 6, 7, 8, 9],
+  'Iran': [3, 4, 5, 10, 11],             'Iraq': [3, 4, 10, 11],
+  'Israel': [3, 4, 5, 10, 11],           'Japan': [3, 4, 5, 10, 11],
+  'Jordan': [3, 4, 5, 9, 10, 11],        'Kazakhstan': [5, 6, 9],
+  'Kuwait': [11, 12, 1, 2, 3],           'Kyrgyzstan': [6, 7, 8, 9],
+  'Laos': [11, 12, 1, 2],                'Lebanon': [4, 5, 6, 9, 10],
+  'Malaysia': [3, 4, 5, 6, 7, 8, 9],     'Maldives': [12, 1, 2, 3, 4],
+  'Mongolia': [6, 7, 8, 9],              'Myanmar': [11, 12, 1, 2],
+  'Nepal': [3, 4, 10, 11],               'North Korea': [4, 5, 9, 10],
+  'Oman': [11, 12, 1, 2, 3],             'Pakistan': [4, 5, 9, 10],
+  'Palestine': [3, 4, 5, 10, 11],        'Philippines': [12, 1, 2, 3, 4, 5],
+  'Qatar': [11, 12, 1, 2, 3],            'Saudi Arabia': [11, 12, 1, 2, 3],
+  'Singapore': [2, 3, 4, 5, 6, 7, 8],    'South Korea': [4, 5, 9, 10],
+  'Sri Lanka': [12, 1, 2, 3, 4],         'Syria': [4, 5, 10],
+  'Taiwan': [3, 4, 10, 11],              'Tajikistan': [6, 7, 8, 9],
+  'Thailand': [11, 12, 1, 2, 3],         'Timor-Leste': [5, 6, 7, 8, 9, 10],
+  'Turkey': [4, 5, 6, 9, 10],            'Turkmenistan': [4, 5, 9, 10],
+  'United Arab Emirates': [11, 12, 1, 2, 3], 'Uzbekistan': [4, 5, 9, 10],
+  'Vietnam': [2, 3, 4, 9, 10, 11],       'Yemen': [10, 11, 12, 1, 2, 3],
+
+  // ── Africa ───────────────────────────────────────────────────────────
+  'Algeria': [3, 4, 5, 10, 11],          'Angola': [5, 6, 7, 8, 9],
+  'Benin': [11, 12, 1, 2],               'Botswana': [5, 6, 7, 8, 9, 10],
+  'Burkina Faso': [11, 12, 1, 2],        'Burundi': [6, 7, 8],
+  'Cabo Verde': [11, 12, 1, 2, 3, 4, 5, 6], 'Cameroon': [11, 12, 1, 2],
+  'Central African Republic': [12, 1, 2], 'Chad': [11, 12, 1, 2],
+  'Comoros': [5, 6, 7, 8, 9, 10],        'Congo': [6, 7, 8, 9],
+  'Democratic Republic of Congo': [6, 7, 8, 9], "Cote d'Ivoire": [11, 12, 1, 2],
+  'Djibouti': [11, 12, 1, 2],            'Egypt': [10, 11, 12, 1, 2, 3, 4],
+  'Equatorial Guinea': [12, 1, 2],       'Eritrea': [10, 11, 12, 1, 2, 3],
+  'Eswatini': [5, 6, 7, 8, 9],           'Ethiopia': [10, 11, 12, 1, 2],
+  'Gabon': [6, 7, 8],                    'Gambia': [11, 12, 1, 2, 3, 4],
+  'Ghana': [11, 12, 1, 2, 3],            'Guinea': [11, 12, 1, 2, 3],
+  'Guinea-Bissau': [11, 12, 1, 2, 3],    'Kenya': [1, 2, 7, 8, 9, 10],
+  'Lesotho': [4, 5, 9, 10],              'Liberia': [11, 12, 1, 2, 3, 4],
+  'Libya': [3, 4, 10, 11],               'Madagascar': [4, 5, 6, 7, 8, 9, 10],
+  'Malawi': [5, 6, 7, 8, 9, 10],         'Mali': [11, 12, 1, 2],
+  'Mauritania': [11, 12, 1, 2],          'Mauritius': [5, 6, 7, 8, 9, 10, 11],
+  'Morocco': [3, 4, 5, 9, 10, 11],       'Mozambique': [5, 6, 7, 8, 9, 10, 11],
+  'Namibia': [5, 6, 7, 8, 9, 10],        'Niger': [11, 12, 1, 2],
+  'Nigeria': [11, 12, 1, 2],             'Rwanda': [6, 7, 8, 9, 12, 1, 2],
+  'Sao Tome and Principe': [6, 7, 8, 9], 'Senegal': [11, 12, 1, 2, 3, 4, 5],
+  'Seychelles': [4, 5, 10, 11],          'Sierra Leone': [11, 12, 1, 2, 3, 4],
+  'Somalia': [12, 1, 2, 3],              'South Africa': [3, 4, 5, 9, 10, 11],
+  'South Sudan': [12, 1, 2],             'Sudan': [11, 12, 1, 2],
+  'Tanzania': [1, 2, 6, 7, 8, 9, 10],    'Togo': [11, 12, 1, 2],
+  'Tunisia': [4, 5, 6, 9, 10],           'Uganda': [6, 7, 8, 12, 1, 2],
+  'Zambia': [5, 6, 7, 8, 9, 10],         'Zimbabwe': [5, 6, 7, 8, 9, 10],
+
+  // ── Americas ─────────────────────────────────────────────────────────
+  'Antigua and Barbuda': [12, 1, 2, 3, 4], 'Argentina': [10, 11, 12, 1, 2, 3, 4],
+  'Bahamas': [12, 1, 2, 3, 4, 5],        'Barbados': [12, 1, 2, 3, 4, 5],
+  'Belize': [12, 1, 2, 3, 4],            'Bolivia': [5, 6, 7, 8, 9, 10],
+  'Brazil': [5, 6, 7, 8, 9, 10],         'Canada': [6, 7, 8, 9],
+  'Chile': [10, 11, 12, 1, 2, 3],        'Colombia': [12, 1, 2, 3, 7, 8],
+  'Costa Rica': [12, 1, 2, 3, 4],        'Cuba': [11, 12, 1, 2, 3, 4],
+  'Dominica': [1, 2, 3, 4, 5],           'Dominican Republic': [12, 1, 2, 3, 4],
+  'Ecuador': [6, 7, 8, 9],               'El Salvador': [11, 12, 1, 2, 3, 4],
+  'Grenada': [1, 2, 3, 4, 5],            'Guatemala': [11, 12, 1, 2, 3, 4],
+  'Guyana': [9, 10, 11],                 'Haiti': [12, 1, 2, 3],
+  'Honduras': [2, 3, 4, 5],              'Jamaica': [12, 1, 2, 3, 4],
+  'Mexico': [11, 12, 1, 2, 3, 4],        'Nicaragua': [12, 1, 2, 3, 4],
+  'Panama': [1, 2, 3, 4],                'Paraguay': [5, 6, 7, 8, 9],
+  'Peru': [5, 6, 7, 8, 9, 10],           'Saint Kitts and Nevis': [12, 1, 2, 3, 4],
+  'Saint Lucia': [12, 1, 2, 3, 4, 5],    'Saint Vincent and the Grenadines': [1, 2, 3, 4, 5],
+  'Samoa': [5, 6, 7, 8, 9, 10],          'Suriname': [9, 10, 11],
+  'Trinidad and Tobago': [1, 2, 3, 4, 5], 'United States of America': [5, 6, 9, 10],
+  'Uruguay': [11, 12, 1, 2, 3],          'Venezuela': [12, 1, 2, 3, 4],
+
+  // ── Oceania ──────────────────────────────────────────────────────────
+  'Australia': [3, 4, 5, 9, 10, 11],     'Fiji': [5, 6, 7, 8, 9, 10],
+  'Kiribati': [5, 6, 7, 8, 9, 10],       'Marshall Islands': [12, 1, 2, 3, 4],
+  'Micronesia': [1, 2, 3, 4],            'Nauru': [5, 6, 7, 8, 9, 10],
+  'New Zealand': [11, 12, 1, 2, 3, 4],   'Palau': [11, 12, 1, 2, 3, 4],
+  'Papua New Guinea': [5, 6, 7, 8, 9, 10], 'Solomon Islands': [5, 6, 7, 8, 9, 10],
+  'Tonga': [5, 6, 7, 8, 9, 10],          'Tuvalu': [5, 6, 7, 8, 9, 10],
+  'Vanuatu': [5, 6, 7, 8, 9, 10]
+};

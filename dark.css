@@ -1,0 +1,694 @@
+/* =====================================================================
+   dark.css — dark-mode counterparts for hardcoded light colours in the
+   base stylesheets. Only active with <html data-theme="dark">.
+   Scoped with :where() so specificity matches the original rule.
+   Loaded BEFORE theme.css, so the theme's token-based rules still win.
+   Dark design tokens live at the end of theme.css.
+   ===================================================================== */
+
+/* ── from style.css ─────────────────────────────────────────────────── */
+:where(:root[data-theme="dark"]) button,
+:where(:root[data-theme="dark"]) select,
+:where(:root[data-theme="dark"]) input[type=text] {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .map-wrap {
+  background: var(--surface-alt);
+}
+
+:where(:root[data-theme="dark"]) #suggestions {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .stat-circle-sub {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .swatch {
+  border: 1px solid var(--line-strong);
+}
+
+:where(:root[data-theme="dark"]) .tooltip img.flag-icon {
+  border: 1px solid var(--line-strong);
+}
+
+:where(:root[data-theme="dark"]) .note {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .cl-filter-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .cl-letter-header:hover {
+  background: var(--surface-alt);
+}
+
+:where(:root[data-theme="dark"]) .cl-chevron {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .cl-dot {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .cl-been .cl-dot {
+  border-color: #47677b;
+}
+
+:where(:root[data-theme="dark"]) .cl-want .cl-dot {
+  border-color: #746a47;
+}
+
+:where(:root[data-theme="dark"]) .cl-badge {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .cl-been .cl-badge {
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .cl-want .cl-badge {
+  color: #efca80;
+}
+
+:where(:root[data-theme="dark"]) .wonders-seg-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .wonders-summary {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .wonders-item-land {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .wonders-status-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .wonders-status-btn:hover {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .wonders-status-btn.active-been {
+  border-color: #47677b;
+}
+
+:where(:root[data-theme="dark"]) .wonders-status-btn.active-want {
+  border-color: #746a47;
+}
+
+:where(:root[data-theme="dark"]) .wonders-status-btn.active-neutral {
+  background: var(--surface-alt);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .wonders-empty {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-form-wrap {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-form-close {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-label {
+  color: var(--ink);
+}
+
+:where(:root[data-theme="dark"]) .tl-req {
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .tl-hint {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-input {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-error {
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .tl-chip {
+  background: #414e5b;
+  border: 1px solid #5b7080;
+  color: #8ec5e1;
+}
+
+:where(:root[data-theme="dark"]) .tl-chip-country {
+  background: #414e5b;
+  border-color: #5b7080;
+  color: #8ec5e1;
+}
+
+:where(:root[data-theme="dark"]) .tl-chip-tag {
+  background: #454e52;
+  border-color: #746a47;
+  color: #ffdc70;
+}
+
+:where(:root[data-theme="dark"]) .tl-suggestions {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-toggle-label {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-days-equal {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-wonder-checked {
+  background: #425059;
+  border-color: #577168;
+}
+
+:where(:root[data-theme="dark"]) .tl-wonder-land {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-option-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-option-btn:hover {
+  color: #85cdeb;
+}
+
+:where(:root[data-theme="dark"]) .tl-add-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-mood-label {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-budget-toggle:hover {
+  background: var(--surface-alt);
+}
+
+:where(:root[data-theme="dark"]) .tl-chevron {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-breakdown-label {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-breakdown-cat {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-cancel-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-empty-text {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-list-item {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-dates {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-dur {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-budget {
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .tl-item-countries {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-tag {
+  background: #454e52;
+  color: #ffdc70;
+  border: 1px solid #746a47;
+}
+
+:where(:root[data-theme="dark"]) .tl-edit-btn,
+:where(:root[data-theme="dark"]) .tl-delete-btn {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-edit-btn:hover {
+  color: var(--ink);
+}
+
+:where(:root[data-theme="dark"]) .tl-delete-btn:hover {
+  background: #454c58;
+  color: #ef9680;
+}
+
+/* ── from triplog.css ───────────────────────────────────────────────── */
+:where(:root[data-theme="dark"]) .tl-form-wrap {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-form-close {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-label {
+  color: var(--ink);
+}
+
+:where(:root[data-theme="dark"]) .tl-req {
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .tl-hint {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-input {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-error {
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .tl-chip {
+  background: #414e5b;
+  border: 1px solid #5b7080;
+  color: #8ec5e1;
+}
+
+:where(:root[data-theme="dark"]) .tl-chip-country {
+  background: #414e5b;
+  border-color: #5b7080;
+  color: #8ec5e1;
+}
+
+:where(:root[data-theme="dark"]) .tl-chip-tag {
+  background: #454e52;
+  border-color: #746a47;
+  color: #ffdc70;
+}
+
+:where(:root[data-theme="dark"]) .tl-suggestions {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-toggle-label {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-days-equal {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-wonder-checked {
+  background: #425059;
+  border-color: #577168;
+}
+
+:where(:root[data-theme="dark"]) .tl-wonder-land {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-option-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-option-btn:hover {
+  color: #85cdeb;
+}
+
+:where(:root[data-theme="dark"]) .tl-add-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-mood-label {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-budget-toggle:hover {
+  background: var(--surface-alt);
+}
+
+:where(:root[data-theme="dark"]) .tl-chevron {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-breakdown-label {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-breakdown-cat {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-cancel-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-empty-text {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-list-item {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-dates {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-dur {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-budget {
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .tl-item-countries {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl-item-tag {
+  background: #454e52;
+  color: #ffdc70;
+  border: 1px solid #746a47;
+}
+
+:where(:root[data-theme="dark"]) .tl-edit-btn,
+:where(:root[data-theme="dark"]) .tl-delete-btn {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl-edit-btn:hover {
+  color: var(--ink);
+}
+
+:where(:root[data-theme="dark"]) .tl-delete-btn:hover {
+  background: #454c58;
+  color: #ef9680;
+}
+
+/* ── from triplist.css ──────────────────────────────────────────────── */
+:where(:root[data-theme="dark"]) .tl5-filter-select {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl5-filter-summary {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl5-list-item {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl5-first-pill {
+  background: #454f56;
+  border: 1px solid #746a47;
+  color: #ffdc70;
+}
+
+:where(:root[data-theme="dark"]) .tl5-item-dates {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .tl5-item-dur {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl5-item-budget {
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .tl5-detail-wrap {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl5-detail-days {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .tl5-first-badge {
+  background: #454f56;
+  border: 1px solid #746a47;
+  color: #ffdc70;
+}
+
+:where(:root[data-theme="dark"]) .tl5-wonder-tag {
+  background: #425059;
+  border: 1px solid #577168;
+  color: #91dea1;
+}
+
+:where(:root[data-theme="dark"]) .tl5-detail-notes {
+  color: var(--ink);
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl5-budget-diff.over {
+  background: #454c58;
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .tl5-budget-diff.under {
+  background: #404f59;
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .tl5-budget-cat {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .tl5-edit-btn {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+:where(:root[data-theme="dark"]) .tl5-delete-btn {
+  background: var(--surface);
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .tl5-delete-btn:hover {
+  background: #454c58;
+}
+
+/* ── from tripstats.css ─────────────────────────────────────────────── */
+:where(:root[data-theme="dark"]) .ts-card {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .ts-bar-count {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .ts-budget-row {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .ts-budget-perday {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .ts-style-item {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .ts-tag-chip {
+  background: #454e52;
+  border: 1px solid #746a47;
+  color: #ffdc70;
+}
+
+:where(:root[data-theme="dark"]) .ts-wb-trip {
+  background: #414e5b;
+  border: 1px solid #5b7080;
+  color: #8ec5e1;
+}
+
+:where(:root[data-theme="dark"]) .ts-wb-manual {
+  background: #425059;
+  border: 1px solid #577168;
+  color: #91dea1;
+}
+
+/* ── from planner.css ───────────────────────────────────────────────── */
+:where(:root[data-theme="dark"]) .pp-filter-select {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-filter-summary {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .pp-empty-text {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .pp-card {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-card.pp-completed .pp-status-stripe {
+  background: #374b4d;
+}
+
+:where(:root[data-theme="dark"]) .pp-tier-budget {
+  background: #414e5b;
+  border: 1px solid #5b7080;
+  color: #8ec5e1;
+}
+
+:where(:root[data-theme="dark"]) .pp-tier-mid {
+  background: #454e52;
+  border: 1px solid #746a47;
+  color: #ffdc70;
+}
+
+:where(:root[data-theme="dark"]) .pp-tier-luxury {
+  background: #434c5c;
+  border: 1px solid #5f5385;
+  color: #ba91de;
+}
+
+:where(:root[data-theme="dark"]) .pp-status-planned {
+  background: #414e5b;
+}
+
+:where(:root[data-theme="dark"]) .pp-status-completed {
+  background: #404f59;
+  border: 1px solid #577168;
+  color: #91dea1;
+}
+
+:where(:root[data-theme="dark"]) .pp-card-meta {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .pp-card-nights {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .pp-card-budget {
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .pp-detail-wrap {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-stop-nights {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .pp-stop-cost-item {
+  background: var(--surface);
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .pp-budget-card {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-budget-card.pp-budget-total {
+  background: #424f5b;
+}
+
+:where(:root[data-theme="dark"]) .pp-wonder-tag {
+  background: #425059;
+  border: 1px solid #577168;
+  color: #91dea1;
+}
+
+:where(:root[data-theme="dark"]) .pp-notes {
+  color: var(--ink);
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-complete-btn {
+  background: var(--surface);
+  border: 1px solid #577168;
+  color: #91dea1;
+}
+
+:where(:root[data-theme="dark"]) .pp-complete-btn:hover {
+  background: #404f59;
+}
+
+:where(:root[data-theme="dark"]) .pp-complete-btn.pp-is-completed {
+  background: #404f59;
+}
+
+:where(:root[data-theme="dark"]) .pp-edit-btn {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+:where(:root[data-theme="dark"]) .pp-delete-btn {
+  background: var(--surface);
+  color: #ef9680;
+}
+
+:where(:root[data-theme="dark"]) .pp-delete-btn:hover {
+  background: #454c58;
+}
+
+:where(:root[data-theme="dark"]) .pp-form-wrap {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-form-close {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .pp-stop-remove-btn:hover {
+  color: #ef9680;
+  background: #454c58;
+}
+
+:where(:root[data-theme="dark"]) .pp-flight-toggle {
+  color: var(--ink-soft);
+}
+
+:where(:root[data-theme="dark"]) .pp-stop-cost-total {
+  color: #8be4d9;
+}
+
+:where(:root[data-theme="dark"]) .pp-wonder-addon-item.pp-wonder-checked {
+  background: #425059;
+  border-color: #577168;
+}
+
+:where(:root[data-theme="dark"]) .pp-wonder-addon-fee {
+  color: var(--muted);
+}
+
+:where(:root[data-theme="dark"]) .pp-cancel-btn {
+  background: var(--surface);
+}
+
+:where(:root[data-theme="dark"]) .pp-budget-preview {
+  background: #424f5b;
+}
+
+:where(:root[data-theme="dark"]) .pp-budget-preview-breakdown {
+  color: var(--ink-soft);
+}
