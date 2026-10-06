@@ -687,36 +687,47 @@ path.country:hover { opacity: 0.82; }
   font-size: 1.45rem;
 }
 
-.tl-new-btn, .tl-save-btn {
+.tl-new-btn, .tl-save-btn,
+.pp-new-btn, .pp-save-btn {
   background: var(--ocean-700);
   border-radius: 10px;
   box-shadow: var(--shadow-sm);
 }
 
-.tl-new-btn:hover, .tl-save-btn:hover {
+.tl-new-btn:hover, .tl-save-btn:hover,
+.pp-new-btn:hover, .pp-save-btn:hover {
   background: var(--ocean-900);
   opacity: 1;
 }
 
-.tl-form-wrap, .tl-list-item {
+.tl-form-wrap, .tl-list-item,
+.pp-form-wrap, .tl5-list-item, .pp-card {
   border-color: var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
 
-.tl-form-wrap { margin-left: 0; margin-right: 0; }
-.tl-list-wrap { padding: 0; }
+/* Trip Log and Planner share one frame: same side spacing for every block */
+.tl-form-wrap, .pp-form-wrap { margin-left: 0; margin-right: 0; }
+.tl-list-wrap, .pp-list-wrap { padding: 0; }
+.tl5-filter-bar, .pp-filter-bar { padding: 0 0 12px; }
 
-.tl-form-header {
+.tl-form-header, .pp-form-header {
   background: var(--surface-alt);
   border-bottom-color: var(--line);
 }
 
-.tl-form-heading { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+.tl-form-heading, .pp-form-heading { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
 
 .tl-input, .tl-textarea { border-color: var(--line-strong); border-radius: 10px; }
 
-.tl-list-item:hover { box-shadow: var(--shadow-md); }
+.tl-list-item:hover, .tl5-list-item:hover, .pp-card:hover { box-shadow: var(--shadow-md); }
+
+.tl5-item-title, .pp-card-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+
+.tl5-filter-select, .pp-filter-select { border-color: var(--line-strong); background-color: var(--surface); }
+
+.tl-cancel-btn, .pp-cancel-btn { border-radius: 10px; }
 
 .tl-item-title { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
 
