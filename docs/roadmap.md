@@ -17,6 +17,8 @@ month is in its best months / event months. No ranking, no weighting, no reasons
 - Season data: country best months (`seasons-data.js`), wonder best months (`wonders.js`),
   event dates and peak months (`calendar-data.js`)
 - Context: countries / wonders already visited, past trips (to avoid repeats)
+- Once built: season tiers (best / shoulder / worst) and practical factors
+  (distance from home, budget, trip length, crowds, prices) — see **Future**
 
 **Expected output:** a short ranked list (e.g. top 3–5 destinations) with
 - why it fits that month (season, events, peak nature)
@@ -38,6 +40,46 @@ month is in its best months / event months. No ranking, no weighting, no reasons
 ### 📊 Rule-based ranking for "Where to go" (quick win before the LLM)
 Score each match: in season +1, peak month +1, wonder/event in that country that month
 +1 each, 🎯 Next up +1 — and sort results by score.
+Later extended with season tiers and practical factors (see **Future** below).
+
+## Future
+
+### 🌦️ Season tiers: best, shoulder and worst times
+Replace the single "best months" list with three tiers so the calculation can
+tell "great" from "okay" from "avoid".
+
+**Data model** (countries in `seasons-data.js`, wonders in `wonders.js`, optionally
+calendar events):
+```js
+'Thailand': { best: [11, 12, 1, 2], shoulder: [3, 10], worst: [4, 5, 9] }
+// months not listed = neutral / no strong recommendation
+```
+- `best` — ideal weather, dry season, peak nature
+- `shoulder` — good weather, fewer crowds, lower prices (often the sweet spot)
+- `worst` — monsoon, hurricane season, extreme heat/cold, closures
+- Keep a short `why` per tier (e.g. "monsoon", "typhoon season") to show in the UI
+- Research and source it like the calendar data; migrate the current lists to `best`
+
+**Integrate into the calculation** (`where-to-go.js`, and the LLM prompt later):
+- Score per month: best +2, shoulder +1, neutral 0, worst −2
+- Show worst-time warnings in "Not ideal in …" with the reason
+- Month strip and season bars use three colours (best / shoulder / worst)
+
+### 🧭 Practical factors in the calculation
+Factor real-world constraints into "Where to go" (rule-based score first, then the LLM):
+- **Travel distance from home** — home city/airport in settings; distance or flight
+  time per country (e.g. from capital coordinates); short-haul vs long-haul weighting
+- **Budget** — rough daily cost level per country (low / mid / high) vs the user's budget
+- **Trip length** — available days; long-haul destinations need longer trips
+  (e.g. skip Australia for a 4-day trip)
+- **Crowds** — peak tourist months per country/wonder (school holidays, festivals)
+- **Prices** — high/low season for flights and hotels (overlaps with crowds and
+  shoulder season; festival periods raise prices)
+
+Needs: a settings panel (home, budget, trip length), new per-country data
+(cost level, crowd/price seasons), and a scoring function combining season tier +
+practical factors + wishlist priority. Show the score breakdown so results stay
+explainable.
 
 ### ☁️ Cloud sync (Supabase, email login link)
 Progress follows you across devices instead of Save/Load Progress files.
