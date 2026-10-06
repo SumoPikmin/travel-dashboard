@@ -30,12 +30,22 @@
       <h1 class="sidebar-title">Travel Dashboard</h1>
       <p class="sidebar-tagline">Your world, one stamp at a time</p>
       <div class="nav-buttons">
-        <button id="homeBtn"    class="nav-btn active"><span class="nav-icon">🏠</span>Home</button>
-        <button id="statsBtn"   class="nav-btn"><span class="nav-icon">🌍</span>Countries</button>
-        <button id="wondersBtn" class="nav-btn"><span class="nav-icon">🏛️</span>Wonders</button>
-        <button id="tripLogBtn" class="nav-btn"><span class="nav-icon">✈️</span>Trip Log</button>
-        <button id="plannerBtn" class="nav-btn"><span class="nav-icon">🗺️</span>Planner</button>
+        <button id="homeBtn"       class="nav-btn active" data-group="home"><span class="nav-icon">🏠</span>Home</button>
+        <button id="statsBtn"      class="nav-btn" data-group="countries"><span class="nav-icon">🌍</span>Countries</button>
+        <button id="wondersBtn"    class="nav-btn" data-group="wonders"><span class="nav-icon">🏛️</span>Wonders</button>
+        <button id="tripsBtn"      class="nav-btn" data-group="trips"><span class="nav-icon">✈️</span>Trips</button>
+        <button id="collectionBtn" class="nav-btn" data-group="collection"><span class="nav-icon">🔶</span>Collection</button>
       </div>
+    </div>
+
+    <!-- Sub-switches for grouped tabs -->
+    <div class="subnav" data-group="trips" role="tablist" aria-label="Trips" style="display:none;">
+      <button class="subnav-btn" data-tab="tripLogContent">✈️ Trip Log</button>
+      <button class="subnav-btn" data-tab="plannerContent">🗺️ Planner</button>
+    </div>
+    <div class="subnav" data-group="collection" role="tablist" aria-label="Collection" style="display:none;">
+      <button class="subnav-btn" data-tab="stickersContent">🔶 Stickers</button>
+      <button class="subnav-btn" data-tab="badgesContent">🏅 Badges</button>
     </div>
 
     <!-- Home content -->
@@ -126,6 +136,8 @@
 
     <!-- Wonders content -->
     <div id="wondersContent" style="padding: 0 10px; display:none;"></div>
+    <div id="badgesContent" style="padding: 0 10px; display:none;"></div>
+    <div id="stickersContent" style="padding: 0 10px; display:none;"></div>
     <div id="tripLogContent" style="padding: 0 10px; display:none;"></div>
     <div id="plannerContent" style="padding: 0 10px; display:none;"></div>
 
@@ -155,6 +167,8 @@
   <script src="planner-ui.js"></script>
   <script src="planner-form.js"></script>
   <script src="compat.js"></script>
+  <script src="badges.js"></script>
+  <script src="stickers.js"></script>
 
   <script>
     // Offline support + "Add to Home Screen" (see sw.js)
@@ -168,16 +182,59 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const homeBtn        = document.getElementById('homeBtn');
-      const statsBtn       = document.getElementById('statsBtn');
-      const wondersBtn     = document.getElementById('wondersBtn');
-      const homeContent    = document.getElementById('homeContent');
-      const statsContent   = document.getElementById('statsContent');
-      const wondersContent = document.getElementById('wondersContent');
-      const tripLogBtn     = document.getElementById('tripLogBtn');
-      const tripLogContent = document.getElementById('tripLogContent');
-      const plannerBtn     = document.getElementById('plannerBtn');
-      const plannerContent = document.getElementById('plannerContent');
+      // Each page belongs to one nav group; Trips and Collection have a sub-switch
+      const PAGES = {
+        homeContent:     { group: 'home',       init: () => {} },
+        statsContent:    { group: 'countries',  init: () => {
+          if (!statsInitialized && window.updateStats) { setTimeout(window.updateStats, 0); statsInitialized = true; }
+        } },
+        wondersContent:  { group: 'wonders',    init: () => window.initWonders  && window.initWonders()  },
+        tripLogContent:  { group: 'trips',      init: () => window.initTripLog  && window.initTripLog()  },
+        plannerContent:  { group: 'trips',      init: () => window.initPlanner  && window.initPlanner()  },
+        stickersContent: { group: 'collection', init: () => window.initStickers && window.initStickers(), wide: true },
+        badgesContent:   { group: 'collection', init: () => window.initBadges   && window.initBadges(),   wide: true }
+      };
+
+      // Last-opened page per group, so Trips / Collection reopen where you left off
+      const lastInGroup = { home: 'homeContent', countries: 'statsContent', wonders: 'wondersContent',
+                            trips: 'tripLogContent', collection: 'stickersContent' };
+
+      let statsInitialized = false;
+
+      function showTab(tabId) {
+        const page = PAGES[tabId];
+        if (!page) return;
+        lastInGroup[page.group] = tabId;
+
+        Object.keys(PAGES).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = id === tabId ? 'block' : 'none';
+        });
+
+        document.querySelectorAll('.nav-btn').forEach(btn =>
+          btn.classList.toggle('active', btn.dataset.group === page.group));
+
+        document.querySelectorAll('.subnav').forEach(nav => {
+          nav.style.display = nav.dataset.group === page.group ? '' : 'none';
+          nav.querySelectorAll('.subnav-btn').forEach(btn => {
+            const active = btn.dataset.tab === tabId;
+            btn.classList.toggle('active', active);
+            btn.setAttribute('aria-selected', active);
+          });
+        });
+
+        // Full-width pages hide the map
+        document.body.classList.toggle('wide-view', !!page.wide);
+
+        page.init();
+      }
+
+      document.querySelectorAll('.nav-btn').forEach(btn =>
+        btn.addEventListener('click', () => showTab(lastInGroup[btn.dataset.group])));
+
+      document.querySelectorAll('.subnav-btn').forEach(btn =>
+        btn.addEventListener('click', () => showTab(btn.dataset.tab)));
+
       const homeNewTripBtn = document.getElementById('homeNewTripBtn');
       const homeNewPlanBtn = document.getElementById('homeNewPlanBtn');
 
@@ -199,53 +256,6 @@
         });
       }
 
-      let statsInitialized = false;
-
-      function showTab(tabId) {
-        // Hide all content panels
-        homeContent.style.display    = 'none';
-        statsContent.style.display   = 'none';
-        wondersContent.style.display = 'none';
-        if (tripLogContent)  tripLogContent.style.display  = 'none';
-        if (plannerContent)  plannerContent.style.display  = 'none';
-
-        // Remove active from all nav buttons
-        homeBtn.classList.remove('active');
-        statsBtn.classList.remove('active');
-        wondersBtn.classList.remove('active');
-        if (tripLogBtn)  tripLogBtn.classList.remove('active');
-        if (plannerBtn)  plannerBtn.classList.remove('active');
-
-        if (tabId === 'homeContent') {
-          homeContent.style.display = 'block';
-          homeBtn.classList.add('active');
-        } else if (tabId === 'statsContent') {
-          statsContent.style.display = 'block';
-          statsBtn.classList.add('active');
-          if (!statsInitialized) {
-            if (window.updateStats) setTimeout(window.updateStats, 0);
-            statsInitialized = true;
-          }
-        } else if (tabId === 'wondersContent') {
-          wondersContent.style.display = 'block';
-          wondersBtn.classList.add('active');
-          if (window.initWonders) window.initWonders();
-        } else if (tabId === 'tripLogContent') {
-          if (tripLogContent) tripLogContent.style.display = 'block';
-          if (tripLogBtn) tripLogBtn.classList.add('active');
-          if (window.initTripLog) window.initTripLog();
-        } else if (tabId === 'plannerContent') {
-          if (plannerContent) plannerContent.style.display = 'block';
-          if (plannerBtn) plannerBtn.classList.add('active');
-          if (window.initPlanner) window.initPlanner();
-        }
-      }
-
-      homeBtn.addEventListener('click',    () => showTab('homeContent'));
-      statsBtn.addEventListener('click',   () => showTab('statsContent'));
-      wondersBtn.addEventListener('click', () => showTab('wondersContent'));
-      tripLogBtn.addEventListener('click', () => showTab('tripLogContent'));
-      if (plannerBtn) plannerBtn.addEventListener('click', () => showTab('plannerContent'));
       showTab('homeContent');
 
       // Stats filter buttons — set filter directly in stats.js and re-render
